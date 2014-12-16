@@ -1,5 +1,5 @@
 <div id="page1" class="container" >
-    <div class="col-xs-6">
+    <div class="col-xs-6 borders">
         <div class="row center" >
             
               <%=image_tag("profile2.png", size: '128', class: "img-rounded" ) %>
@@ -7,11 +7,11 @@
             
               <h3> Chris Felder </h3>
              
-           <p> Software Engineer & Data Analyst</p>
+           <h4> Software Engineer & Data Analyst</h4>
              </div>
            
            <div class="row">
-               <p>
+               <p style="padding: 10px">
                         I enjoy solving challenging problems and analyzing complex data sets.
                    A life-long learner, I seek out new skills to expand my
                    programming and analytical proficiencies. 
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="col-xs-5 col-xs-offset-1">
-        <div class="row center">
+        <div class="row center borders">
         <%= link_to image_tag("facebook.png", alt: "Facebook", :width => 32),
           'https://www.facebook.com/Chris.D.Felder' %>
         <%= link_to image_tag("twitter.png", alt: "Twitter", :width => 32),
@@ -43,7 +43,7 @@
           :width => 32), 'http://stackoverflow.com/users/4360361/chris-felder' %>
         </div>
         <p></p>
-        <div class="row center" >
+        <div class="row center borders" >
           <%= render 'cv_skills' %>
             
             
