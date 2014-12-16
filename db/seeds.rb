@@ -5,3 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+character = Character.create(name: "Bob Dylan" ,  strength: 10,
+  defense: 10, hp_current: 100, hp_max: 100)

@@ -11,6 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141215215854) do
+
+  create_table "characters", force: true do |t|
+    t.string   "name"
+    t.integer  "strength"
+    t.integer  "defense"
+    t.integer  "hp_current"
+    t.integer  "hp_max"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
+
+  get 'forms' => 'experiments#forms'
+
   root 'static_pages#home'
+  
+  get 'characters/new'
 
   get 'help' => 'static_pages#help'
 
@@ -15,6 +20,8 @@ Rails.application.routes.draw do
   get 'about' => 'static_pages#about'
   
   get 'experiments' => 'static_pages#experiments'
+  
+  resources :characters
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
