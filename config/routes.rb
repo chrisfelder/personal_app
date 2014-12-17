@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   
   get 'experiments' => 'static_pages#experiments'
   
+  delete 'characters' => 'characters#destroy'
+  
   resources :characters
 
   # The priority is based upon order of creation: first created -> highest priority.

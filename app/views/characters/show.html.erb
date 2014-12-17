@@ -17,3 +17,8 @@
   <strong>Health</strong>
   <%= @character.hp_current %> / <%= @character.hp_max %>
 </p>
+
+
+<%= button_to "Delete", characters_path(id: @character.id), method: 'delete' %> |
+<%= link_to 'Edit', edit_character_path(@character) %> |
+<%= link_to 'Back', forms_path %>

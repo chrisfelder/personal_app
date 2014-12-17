@@ -8,25 +8,7 @@
     </div>
     <div class="row">
         <div class="col-xs-5 col-xs-offset-3">
-        <%= form_for @character do |f| %>
-
-            <%= f.label :name %>
-            <%= f.text_field :name, class: "form-control" %>
-            
-            <%= f.label :strength %>
-            <%= f.text_field :strength, class: "form-control" %>
-            
-            <%= f.label :defense %>
-            <%= f.text_field :defense, class: "form-control" %>
-            
-            <%= f.hidden_field :hp_current, :value => 100 %>
-            <%= f.hidden_field :hp_max, :value => 100 %>
-
-            <br>
-            
-            <%= f.submit "Make a Character!", class: "btn btn-primary" %>
-
-            <% end %>
+           <%= render 'form' %>
          </div>
     </div>
 </div>
