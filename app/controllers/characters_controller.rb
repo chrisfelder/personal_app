@@ -18,7 +18,7 @@ class CharactersController < ApplicationController
     if @character.save
       redirect_to @character
     else
-      redirect_to(forms_path)
+      render 'new'
     end
   end
   

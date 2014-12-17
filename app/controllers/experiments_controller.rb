@@ -1,6 +1,6 @@
 class ExperimentsController < ApplicationController
   def new
-    @acharacter = Character.new
+    @character = Character.new
   end
 
   def forms

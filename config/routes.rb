@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  get 'users/new'
+
   get 'forms' => 'experiments#forms'
 
   root 'static_pages#home'
@@ -24,6 +26,8 @@ Rails.application.routes.draw do
   delete 'characters' => 'characters#destroy'
   
   resources :characters
+  
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

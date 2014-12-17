@@ -1,4 +1,6 @@
         <%= form_for @character do |f| %>
+        
+            <%= render 'shared/characters_error_messages' %>
 
             <%= f.label :name %><br>
             <%= f.text_field :name, class: "form-control" %>

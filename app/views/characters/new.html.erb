@@ -1,8 +1,1 @@
-<%= form_for @character, url: {action: "create"} do |f| %>
-  <%= f.text_field :name %>
-  <%= f.text_field :strength %>
-  <%= f.text_field :defense %>
-  <%= f.text_field :hp_max %>
-  <%= f.text_field :hp_current %>
-  <%= f.submit "Create" %>
-<% end %>
+<%= render 'experiments/form' %>
