@@ -1,3 +1,5 @@
+
+
 <p>
   <strong>Name</strong>
   <%= @character.name %>
@@ -18,7 +20,6 @@
   <%= @character.hp_current %> / <%= @character.hp_max %>
 </p>
 
-
-<%= button_to "Delete", characters_path(id: @character.id), method: 'delete' %> |
-<%= link_to 'Edit', edit_character_path(@character) %> |
-<%= link_to 'Back', forms_path %>
+  <%= link_to 'Delete Character', [@user, @character],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>

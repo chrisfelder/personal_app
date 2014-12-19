@@ -1,4 +1,7 @@
 class Character < ActiveRecord::Base
+  belongs_to :user
+  
+    validates :user_id, presence: true
     validates :name, presence: true, length: {maximum: 50}
     validates :strength, presence: true, numericality: { greater_than: 0 }
     validates :defense, presence: true, numericality: { greater_than: 0 }

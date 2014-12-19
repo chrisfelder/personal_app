@@ -2,8 +2,9 @@ require 'test_helper'
 
 class CharacterTest < ActiveSupport::TestCase
   def setup
-    @character = Character.new(name: "Bob Dylan", strength: 10,
-                     defense: 10, hp_current: 100, hp_max: 100)
+    @character = Character.create(name: "Bob Dylan" ,  strength: 10,
+      defense: 10, hp_current: 100, hp_max: 100, user_id: 1, miner: 0,
+      lumberjack: 0, hunter: 0, builder: 0, farmer: 0)
   end
   
   test "should be valid" do

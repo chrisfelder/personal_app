@@ -8,5 +8,8 @@
   <%= @user.email %>
 </p>
 
+  <%= link_to 'Delete User', @user,
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
 
-
+ 

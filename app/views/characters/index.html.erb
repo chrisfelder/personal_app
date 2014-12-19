@@ -1,0 +1,38 @@
+<h2>Characters</h2>
+
+  
+  <table class= " table table-striped">
+      <thead>
+          <th> # </th>
+          <th> Name </th>
+          <th> HP</th>
+          <th> Strength</th>
+          <th> Defense </th>
+          <th> Miner</th>
+          <th> Lumberjack</th>
+          <th> Hunter </th>
+          <th> Builder</th>
+          <th> Farmer </th>
+          
+      </thead>
+  <% @characters.each do |character| %>
+  
+
+      <tr>
+          <td><%= character.id %></td>
+          <td><%= character.name %></td>
+          <td><%= character.hp_current %> / <%= character.hp_max %></td>
+          <td><%= character.strength %></td>
+          <td><%= character.defense %></td>
+          <td><%= character.miner %></td>
+          <td><%= character.lumberjack %></td>
+          <td><%= character.hunter %></td>
+          <td><%= character.builder %></td>
+          <td><%= character.farmer %></td>
+          <td><%= link_to 'Show', [@user, character] %></td>
+          <td><%= button_to 'Delete', [@user, character],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
+      </tr>
+<% end %>
+</table>

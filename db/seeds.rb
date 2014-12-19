@@ -5,6 +5,22 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+user = User.create(name: "James Kirk", email: "james@kirk.com",
+                    password: "password", password_confirmation: "password")
 
-character = Character.create(name: "Bob Dylan" ,  strength: 10,
-  defense: 10, hp_current: 100, hp_max: 100)
+character = Character.create(name: "Paul McCartney" ,  strength: 10,
+  defense: 10, hp_current: 100, hp_max: 100, user_id: 1, miner: 0, lumberjack: 0, 
+    hunter: 0, builder: 0, farmer: 0)
+    
+character = Character.create(name: "John Lennon" ,  strength: 12,
+  defense: 10, hp_current: 100, hp_max: 100, user_id: 1, miner: 0, lumberjack: 0, 
+    hunter: 0, builder: 0, farmer: 0)
+    
+character = Character.create(name: "George Harrison" ,  strength: 10,
+  defense: 11, hp_current: 100, hp_max: 100, user_id: 1, miner: 0, lumberjack: 0, 
+    hunter: 0, builder: 0, farmer: 0)
+    
+character = Character.create(name: "Ringo Starr" ,  strength: 10,
+  defense: 12, hp_current: 100, hp_max: 100, user_id: 1, miner: 0, lumberjack: 0, 
+    hunter: 0, builder: 0, farmer: 0)
+
