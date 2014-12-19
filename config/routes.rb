@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
+  root 'static_pages#home'
 
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
 
-  get 'users/new'
+  get 'signup' => 'users#new'
 
   get 'forms' => 'experiments#forms'
 
-  root 'static_pages#home'
-  
-  get 'characters/new'
+  #get 'characters/new'
 
   get 'help' => 'static_pages#help'
 
@@ -23,7 +25,6 @@ Rails.application.routes.draw do
   
   get 'experiments' => 'static_pages#experiments'
   
-  delete 'characters' => 'characters#destroy'
 
   resources :users do
     resources :characters
