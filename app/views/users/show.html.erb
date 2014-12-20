@@ -7,9 +7,19 @@
   <strong>E-mail</strong>
   <%= @user.email %>
 </p>
+<p>
 
-  <%= link_to 'Delete User', @user,
+</p>
+<div class="row">
+  <div class= "col-xs-4">
+
+    <%= link_to 'Create a character!',
+                new_user_character_path(@user),
+                  class: "btn btn-primary" %> <br> <br>
+    <%= button_to 'Delete Your User', @user,
                method: :delete,
-               data: { confirm: 'Are you sure?' } %>
-
+               data: { confirm: 'Are you sure?' },
+               class: "btn btn-danger" %>
+  </div>
+</div>
  
