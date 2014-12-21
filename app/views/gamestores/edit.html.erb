@@ -1,0 +1,12 @@
+<%= form_for [@user, @gamestore] do |f| %>
+
+            <%= f.label :name %><br>
+            <%= f.text_field :name, class: "form-control" %>
+            
+            <%= f.label "Choose a class!" %>
+            <%= f.select :class, options_for_select(@characters), prompt: 'Select a Class' %>
+
+            <br>
+            
+            <%= f.submit "Make a Character!", class: "btn btn-primary" %>
+<% end %>

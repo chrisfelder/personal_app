@@ -1,0 +1,23 @@
+<p>
+  <strong>Save Name: </strong>
+  <%= @gamestore.name %>
+</p>
+ 
+<p>
+  <strong>Current Turn: </strong>
+  <%= @gamestore.turn %>
+</p>
+
+<p>
+  <strong>Character: </strong>
+  <%= @gamestore.char1 %>
+</p>
+
+<p>
+  <strong>Last Updated: </strong>
+  <%= @gamestore.updated_at %>
+</p>
+
+  <%= link_to 'Delete Character', [@user, @gamestore],
+               method: :delete,
+               data: { confirm: "Don't do it!" } %>

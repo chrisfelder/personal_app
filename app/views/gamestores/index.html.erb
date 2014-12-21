@@ -1,0 +1,28 @@
+<h2>Saves</h2>
+
+  
+  <table class= " table table-striped">
+      <thead>
+          <th> # </th>
+          <th> Name </th>
+          <th> Turn</th>
+          <th> Character1</th>
+          <th> Created At </th>
+          <th> Updated At </th>
+
+          
+      </thead>
+  <% @gamestores.each do |gamestore| %>
+  
+
+      <tr>
+          <td><%= gamestore.id %></td>
+          <td><%= gamestore.name %></td>
+          <td><%= gamestore.turn %></td>
+          <td><%= gamestore.char1 %></td>
+          <td><%= gamestore.created_at %></td>
+          <td><%= gamestore.updated_at %></td>
+
+      </tr>
+<% end %>
+</table>

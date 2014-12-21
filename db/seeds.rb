@@ -24,3 +24,5 @@ character = Character.create(name: "Ringo Starr" ,  strength: 10,
   defense: 12, hp_current: 100, hp_max: 100, user_id: 1, miner: 0, lumberjack: 0, 
     hunter: 0, builder: 0, farmer: 0)
 
+gamestore = Gamestore.create(name: "Save1", turn: 0, char1: 1, user_id: 1)
+gamestore = Gamestore.create(name: "Save2", turn: 0, char1: 2, user_id: 1)

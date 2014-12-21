@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141219190239) do
+ActiveRecord::Schema.define(version: 20141221070302) do
 
   create_table "characters", force: true do |t|
     t.string   "name"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 20141219190239) do
 
   add_index "characters", ["user_id"], name: "index_characters_on_user_id"
 
+  create_table "gamestores", force: true do |t|
+    t.string   "name"
+    t.integer  "turn"
+    t.integer  "char1"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "gamestores", ["user_id", "created_at"], name: "index_gamestores_on_user_id_and_created_at"
+  add_index "gamestores", ["user_id"], name: "index_gamestores_on_user_id"
+
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
@@ -40,6 +52,6 @@ ActiveRecord::Schema.define(version: 20141219190239) do
     t.string   "remember_digest"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
 
 end
