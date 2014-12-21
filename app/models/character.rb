@@ -9,4 +9,7 @@ class Character < ActiveRecord::Base
       { greater_than_or_equal_to: 0 }
     validates :hp_current, presence: true, numericality: 
       { greater_than_or_equal_to: 0, less_than_or_equal_to: :hp_max }
+      
+
+  
 end
