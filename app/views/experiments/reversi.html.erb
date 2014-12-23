@@ -1,0 +1,17 @@
+<div class="container">
+  <% for i in 0...8 do %>
+    <div "row" >
+      <% for j in 0...8 do %>
+        <% if j == 0 %>
+          <div id= <%="r#{i}#{j}"%> class="col-xs-1 col-xs-offset-2 board-space default-space">
+              
+          </div>
+         <% else %>
+           <div id=<%= "r#{i}#{j}"%>  class ="col-xs-1 board-space default-space">
+           </div>
+         <% end %>
+
+    <% end %>
+    </div>
+  <% end %>
+</div>

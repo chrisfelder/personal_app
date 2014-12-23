@@ -6,4 +6,7 @@ class ExperimentsController < ApplicationController
   def forms
     @user = User.new
   end
+  
+  def reversi
+  end
 end

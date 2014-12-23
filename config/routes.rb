@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
+  
+  get 'reversi' => 'experiments#reversi'
 
   get 'signup' => 'users#new'
 
