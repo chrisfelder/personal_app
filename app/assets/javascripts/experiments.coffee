@@ -5,7 +5,7 @@
 
 $(document).on "ready page:change", ->
     $('.board-space').click ->
-        $('.type2').remove()
+        $('.player-piece').remove()
         $(this).append('<div class="player-piece"> </div>')
         #$(this).toggleClass('select-space')
         #$(this).addClass('default-space').addClass('select-space')
