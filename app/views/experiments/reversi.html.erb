@@ -1,37 +1,7 @@
-<div class="container">
-  <% for i in 0...8 do %>
-    <div "row" >
-      <% for j in 0...8 do %>
-        <% if j == 0 %>
-          <div id= <%="r#{i}#{j}"%> class="col-xs-1 col-xs-offset-2 board-space">
-              
-          </div>
-         <% else %>
-           <div id=<%= "r#{i}#{j}"%>  class ="col-xs-1 board-space">
-           </div>
-         <% end %>
 
-    <% end %>
-    </div>
-  <% end %>
-  <div "row">
-    <!-- the button goes here -->
-  </div>
-</div>
 
 <div class="container">
-  <% @board_state.each_char do |x| %>
-    <% if x == "0" %>
-       <div class="col-xs-1 board-space">
-       </div>
-      <% elsif x == "1" %>
-      <div class = "col-xs-1 board-space">
-        <div class = "player-piece"></div>
-      </div>
-      <% else %>
-      <div class = "col-xs-1 board-space">
-        <div class = "opponent-piece"></div>
-      </div>
-      <% end %>
-    <% end %>
+  <%= render 'board', counter: @counter %>
 </div>
+
+

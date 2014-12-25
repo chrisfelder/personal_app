@@ -1,0 +1,30 @@
+  <% @board_state.each_char do |x| %>
+    <% if counter  == 0 || counter % 8 == 0 %>
+      <% if x == "0" %>
+         <div id=<%= counter %> class="col-xs-1 col-xs-offset-2 board-space">
+         </div>
+        <% elsif x == "1" %>
+        <div <%= counter %> class = "col-xs-1 col-xs-offset-2 board-space">
+          <div class = "player-piece"></div>
+        </div>
+        <% else %>
+        <div <%= counter %> class = "col-xs-1 col-xs-offset-2 board-space">
+          <div class = "opponent-piece"></div>
+        </div>
+        <% end %>
+      <% else %>
+        <% if x == "0" %>
+          <div <%= counter %> class="col-xs-1 board-space">
+          </div>
+        <% elsif x == "1" %>
+        <div <%= counter %> class = "col-xs-1 board-space">
+          <div class = "player-piece"></div>
+        </div>
+        <% else %>
+        <div <%= counter %> class = "col-xs-1 board-space">
+          <div class = "opponent-piece"></div>
+        </div>
+        <% end %>
+      <% end %>
+      <% counter += 1 %>
+<% end %>

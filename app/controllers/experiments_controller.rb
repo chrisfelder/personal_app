@@ -8,6 +8,7 @@ class ExperimentsController < ApplicationController
   end
   
   def reversi
+    @counter = 0
     @board_state = 
       "0120120101201201012012010120120101201201012012010120120101201201"
   end
