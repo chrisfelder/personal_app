@@ -7,6 +7,5 @@ $(document).on "ready page:change", ->
     $('.board-space').click ->
         $('.current-piece').remove()
         $(this).append('<div class="current-piece"> </div>')
-        #$(this).toggleClass('select-space')
-        #$(this).addClass('default-space').addClass('select-space')
-        #$(this).addClass('select-space')
+
+        

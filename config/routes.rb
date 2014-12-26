@@ -29,11 +29,14 @@ Rails.application.routes.draw do
   
   get 'experiments' => 'static_pages#experiments'
   
+  
+  
 
   resources :users do
     resources :characters
     resources :gamestores
   end
+  resources :experiments
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

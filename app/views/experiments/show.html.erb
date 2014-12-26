@@ -1,17 +1,19 @@
-
-
 <div class="container">
   <%= render 'board', counter: @counter %>
 </div>
 
 <%= form_for @experiment  do |f| %>
 
-            <%= f.label :save_state %><br>
             <%= f.text_field :save_state, class: "form-control" %>
-            
 
+<input type="checkbox" id="check_1" name="experiment[">
+<label for="check_1"></label>
+    
+<input type="checkbox" id="check_2">
+<label for="check_2"></label>
+    
+<input type="checkbox" id="check_3">
+<label for="check_3"></label> 
             
             <%= f.submit "It's go time!", class: "btn btn-primary" %>
 <% end %>
-
-
