@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 
   root 'static_pages#home'
+  
+  resources :experiments
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
@@ -27,16 +29,18 @@ Rails.application.routes.draw do
 
   get 'about' => 'static_pages#about'
   
-  get 'experiments' => 'static_pages#experiments'
+  #get 'experiments' => 'static_pages#experiments'
   
+  #post "experiment" => "experiments#create"
   
+  #get 'experiments_show' => "experiments#show"
   
 
   resources :users do
     resources :characters
     resources :gamestores
   end
-  resources :experiments
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

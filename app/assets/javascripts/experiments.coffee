@@ -6,6 +6,9 @@
 $(document).on "ready page:change", ->
     $('.board-space').click ->
         $('.current-piece').remove()
+        currentId = $(this).attr("id")
         $(this).append('<div class="current-piece"> </div>')
+        $('#hidden').val(currentId)
+        
 
         

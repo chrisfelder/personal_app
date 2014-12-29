@@ -42,17 +42,3 @@
     margin-top: 20px;
 }
 
-input[type="checkbox"] {
-    display: none;
-}
-
-input[type="checkbox"]:checked + label {
-    background: red;
-}
-
-label {
-    background: green;
-    width:90px;
-    height: 90px;
-    border: solid black 1px;
-}

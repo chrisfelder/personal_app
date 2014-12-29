@@ -5,13 +5,12 @@
 </div>
 
 <%= form_for @experiment  do |f| %>
-
-            <%= f.label :save_state %><br>
-            <%= f.text_field :save_state, class: "form-control" %>
+<br>
+            <%= f.hidden_field :save_state, value: @new_board_state, 
+              class: "form-control" %>
             
 
             
-            <%= f.submit "It's go time!", class: "btn btn-primary" %>
+            <%= f.submit "Start Game!", class: "btn btn-primary" %>
 <% end %>
-
 
