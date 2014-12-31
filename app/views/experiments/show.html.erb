@@ -4,7 +4,7 @@
 
 <%= form_for @experiment  do |f| %>
 
-            <%= f.hidden_field :choice, :value => "",
+            <%= f.hidden_field :choice, :value => nil,
               id: "hidden" %>
 
             <%= f.submit "It's go time!", class: "btn btn-primary" %>

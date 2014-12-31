@@ -23,9 +23,8 @@ class ExperimentsController < ApplicationController
   def reversi
     @experiment = Experiment.new
     @counter = 0
-    @new_board_state = "0" * 64
-    @board_state = 
-      "0120120101201201012012010120120101201201012012010120120101201201"
+    @new_board_state = "0" * 27 + "12" + "0" * 6 + "21" + "0" * 27
+    @board_state = "0120120101201201012012010120120101201201012012010120120101201201"
   end
   
   def create
@@ -58,9 +57,10 @@ class ExperimentsController < ApplicationController
       @temp_experiment = Experiment.find(params[:id])
       @temp_board_state = @temp_experiment.save_state 
       @choice = params[:experiment][:choice]
-      @temp_board_state[@choice.to_i] = "1"
+      if @choice != nil
+        @temp_board_state[@choice.to_i] = "3"
+      end
       params[:experiment][:save_state] = @temp_board_state
-      
       params[:experiment].delete("choice")
       
     end
