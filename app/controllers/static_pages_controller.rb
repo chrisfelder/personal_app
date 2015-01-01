@@ -15,6 +15,7 @@ class StaticPagesController < ApplicationController
   end
 
   def cv
+    @page_background = "cv_background"
   end
 
   def projects

@@ -1,6 +1,6 @@
 <div id="page1" class="container" >
-    <div class="col-xs-6 borders">
-        <div class="row center" >
+    <div class="col-xs-6 ">
+        <div id="picture_div" class="row center cv_panel borders" >
             
               <%=image_tag("profile2.png", size: '128', class: "img-rounded" ) %>
             
@@ -8,29 +8,42 @@
               <h3> Chris Felder </h3>
              
            <h4> Software Engineer & Data Analyst</h4>
-             </div>
+            </div>
+            <div class="row cv_panel borders" >
            
-           <div class="row">
-               <p style="padding: 10px">
+           
+               <p class="pull-left" style="padding: 10px">
                         I enjoy solving challenging problems and analyzing complex data sets.
                    A life-long learner, I seek out new skills to expand my
                    programming and analytical proficiencies. 
 
                </p>
-           </div>
-        <div class="row">
-            <address>
-              <br>311 W Broad<br>
-               Freeport, Tx 77541<br>
+           
+            <address class="pull-left" style="padding: 10px">
+
                <strong> Contact</strong><br>
                <abbr title="Phone">P:</abbr> (979) 236-9441<br>
                <abbr title="E-mail">E:</abbr>
                <a href="mailto:cfelder023@gmail.com">cfelder023@gmail.com</a>
             </address>
+            </div>
+       
+        <p></p>
+        <div class="row cv_panel borders padding">
+            <legend class="center">Work Experience</legend>
+            <strong>Programming & Data Analysis</strong>
+            <h5>Consulting: Ruby on Rails</h5>
+            <ul>
+                <li>Developed a personal web page</li>
+                <li>Full stack development</li>
+                <li>Implemented security countermeasures to prevent: CSRF, XSS, & SQL Injection</li>
+                <li>Gained experience using: RoR, HTML5, Javascript, CSS, Jquery, & PostgreSQL </li>
+                <li>Utilized Test Driven and Behavior Driven Development</li>
+            </ul>
         </div>
     </div>
     <div class="col-xs-5 col-xs-offset-1">
-        <div class="row center borders">
+        <div class="row center borders cv_panel">
         <%= link_to image_tag("facebook.png", alt: "Facebook", :width => 32),
           'https://www.facebook.com/Chris.D.Felder' %>
         <%= link_to image_tag("twitter.png", alt: "Twitter", :width => 32),
@@ -42,8 +55,9 @@
         <%= link_to image_tag("stackoverflow.png", alt: "StackOverflow",
           :width => 32), 'http://stackoverflow.com/users/4360361/chris-felder' %>
         </div>
+        
         <p></p>
-        <div class="row center borders" >
+        <div class="row center borders cv_panel" >
           <%= render 'cv_skills' %>
             
             

@@ -22,9 +22,7 @@ $gray-medium-light: #eaeaea;
   @include box_sizing;
 }
 
-.borders {
-  border: solid 1px #ddd;
-}
+
 
 #page1 {
   font-family: 'Alike', serif;
@@ -165,4 +163,26 @@ input, textarea, select, .uneditable-input {
 
 input {
   height: auto !important;
+}
+
+/* Resume */
+
+#picture_div {
+  padding-top: 10px !important;
+}
+
+.cv_background {
+  background-color: #CCC !important;
+}
+
+.cv_panel {
+  background-color: white;
+}
+
+.borders {
+  border: solid 1px #000;
+}
+
+.padding {
+  padding: 10px;
 }

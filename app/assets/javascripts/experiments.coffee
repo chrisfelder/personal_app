@@ -10,5 +10,6 @@ $(document).on "ready page:change", ->
         $(this).append('<div class="current-piece"> </div>')
         $('#hidden').val(currentId)
         
+        
 
         
