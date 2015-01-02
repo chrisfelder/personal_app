@@ -57,6 +57,7 @@ class Experiment < ActiveRecord::Base
           @current = put_positive_diagonal(@current, @positive_diagonal, @index)
           @current = put_negative_diagonal(@current, @negative_diagonal, @index)
           
+          #sets the last played piece to a computer or player piece
           if boolean == true
             @current.gsub! '3', '1'
           else
@@ -90,7 +91,6 @@ class Experiment < ActiveRecord::Base
           
           self.save_state = @current
           update_save_states
-          
           
       end
       
@@ -204,6 +204,7 @@ class Experiment < ActiveRecord::Base
           return save_string
       end
       
+      #Accepts a save_state and index, returns the row containing the index.
       def find_row(str, index)
           @row = index / 8
           @count = 0
@@ -219,6 +220,7 @@ class Experiment < ActiveRecord::Base
 
       end
       
+      #Accepts an altered row substring and reincoporates it into the save_state.
       def put_row(save_string, changed_row, index)
           @row = index/8
           @save_string_count = 0
