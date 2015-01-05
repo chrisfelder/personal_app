@@ -1,33 +1,24 @@
 <div id="page1" class="container" >
     <div class="col-xs-6 ">
-        <div id="picture_div" class="row center cv_panel borders" >
-            
+        <div id="picture_div" class="row cv_panel borders padding" >
+            <div class="center">
               <%=image_tag("profile2.png", size: '128', class: "img-rounded" ) %>
             
             
               <h3> Chris Felder </h3>
              
            <h4> Software Engineer & Data Analyst</h4>
-            </div>
-            <p></p>
-            <div class="row cv_panel borders" >
-           
-           
-               <p class="pull-left padding">
+  
+           </div>
+           <div class="pull-left">
+               <p>
                         I enjoy solving challenging problems and analyzing complex data sets.
                    A life-long learner, I seek out new skills to expand my
                    programming and analytical proficiencies. 
 
                </p>
-           
-            <address class="pull-left padding" >
-
-               <strong> Contact</strong><br>
-               <abbr title="Phone">P:</abbr> (979) 236-9441<br>
-               <abbr title="E-mail">E:</abbr>
-               <a href="mailto:cfelder023@gmail.com">cfelder023@gmail.com</a>
-            </address>
             </div>
+          </div>
        
         <p></p>
         <%= render 'work_experience' %>
@@ -47,10 +38,11 @@
         </div>
         
         <p></p>
-        <div class="row center borders cv_panel" >
+        
           <%= render 'cv_skills' %>
-            
-            
-        </div> <!-- row center -->
+          <br>
+          <%= render 'education' %>
+        
+        
     </div>
 </div>

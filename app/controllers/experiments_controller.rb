@@ -57,7 +57,10 @@ class ExperimentsController < ApplicationController
       @temp_experiment = Experiment.find(params[:id])
       @temp_board_state = @temp_experiment.save_state 
       @choice = params[:experiment][:choice]
-      if @choice != nil
+      if @choice == ""
+        flash[:danger] = 'Click on the board!'
+        redirect_to @temp_experiment
+      else
         @temp_board_state[@choice.to_i] = "3"
       end
       params[:experiment][:save_state] = @temp_board_state

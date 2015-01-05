@@ -154,17 +154,17 @@ $gray-medium-light: #eaeaea;
 
 /* forms */
 
-input, textarea, select, .uneditable-input {
+/*input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
 }
-
-input {
+*/
+/*input {
   height: auto !important;
 }
-
+*/
 /* Resume */
 
 #picture_div {
@@ -185,4 +185,13 @@ input {
 
 .padding {
   padding: 10px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
 }
