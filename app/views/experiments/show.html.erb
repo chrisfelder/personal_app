@@ -1,13 +1,17 @@
 <div class="container">
   <div class="row">
-  <%= render 'board', counter: @counter %>
+    <% if @board_state.count("0") == 0 %>
+      <%= render 'finish' %>
+      <%= render 'board', counter: @counter %>
+    <% else %>
+      <%= render 'board', counter: @counter %>
+    <% end %>
   </div>
-
-<%= form_for @experiment  do |f| %>
-
-            <%= f.hidden_field :choice, :value => nil,
+  <div class="row center">
+    <%= form_for @experiment  do |f| %>
+      <%= f.hidden_field :choice, :value => nil,
               id: "hidden" %><br>
-
-            <%= f.submit "It's go time!", class: "btn btn-primary" %>
-<% end %>
+      <%= f.submit "It's go time!", class: "btn btn-primary" %>
+   <% end %>
+  </div>
 </div>

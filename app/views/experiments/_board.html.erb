@@ -1,4 +1,4 @@
-  <% @board_state.each_char do |x| %>
+<% @board_state.each_char do |x| %>
     <% if counter  == 0 || counter % 8 == 0 %>
       <% if x == "0" %>
          <div id = <%= counter.to_s %> class="col-xs-1 col-xs-offset-2 board-space">

@@ -1,0 +1,6 @@
+<p>Game Over!</p>
+<% if @board_state.count("1") >= @board_state.count("2") %>
+  <p>A Winner is you!</p>
+<% else %>
+  <p>All your base are belong to us! You lost!</p>
+<% end %>
