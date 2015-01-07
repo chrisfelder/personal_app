@@ -8,8 +8,15 @@
     width: 90px;
     border: solid black 1px;
     }
-    
 
+.highlight-space {
+    background-color: #008A2E !important;
+}
+    
+.score-board {
+    background-color: #B2B2D1;
+    border: solid black 1px;
+}
     
 .player-piece {
     border-radius: 50%;
@@ -41,4 +48,5 @@
     margin: auto;
     margin-top: 20px;
 }
+
 

@@ -1,8 +1,18 @@
 class Experiment < ActiveRecord::Base
+    require 'benchmark'
     before_create :set_previous_save_state
     before_update :player_turn, :computer_turn
     validates :save_state, presence: true
-    
+
+    def method_benchmark
+      n = 50000
+      Benchmark.bm do |x|
+        x.report { n.times do; flip("211311221", false); end }
+        x.report { n.times do; flip_substring("211311221", false); end }
+      end
+    end
+
+
     protected
     
       def test_area
@@ -26,7 +36,7 @@ class Experiment < ActiveRecord::Base
           @previous = self.previous_save_state
           inc = 0
           temp_string = ""
-          @saved_string = ""
+          @saved_string = current.clone
           @max_flip = 0
           temp_save = Experiment.new
           temp_save = current.clone
@@ -71,19 +81,19 @@ class Experiment < ActiveRecord::Base
           
           #find row & flip pieces
           @row = find_row(current, string_index)
-          @row = flip_substring(@row, boolean)
+          @row = flip(@row, boolean)
           
           #create collumn
           @collumn = find_collumn(current, string_index)
-          @collumn = flip_substring(@collumn, boolean)
+          @collumn = flip(@collumn, boolean)
           
           #create positive_diagonal
           @positive_diagonal = positive_diagonal(current, string_index)
-          @positive_diagonal = flip_substring(@positive_diagonal, boolean)
+          @positive_diagonal = flip(@positive_diagonal, boolean)
           
           #create negative_diagonal
           @negative_diagonal = negative_diagonal(current, string_index)
-          @negative_diagonal = flip_substring(@negative_diagonal, boolean)
+          @negative_diagonal = flip(@negative_diagonal, boolean)
           
         
           #update the board_state
@@ -145,7 +155,7 @@ class Experiment < ActiveRecord::Base
           end
           
           temp_str.each_char do |x|
-              if x != "0"
+              if x == "1"
                 @temp = true
                 break
               else
@@ -287,67 +297,75 @@ class Experiment < ActiveRecord::Base
           return save_string
       end
 
-      
-      def flip_substring(str, booleon=true)
-          if booleon == true
-            for i in 0..1  
-              if str.include? "123"
-                str.gsub! '123', '113'
-              elsif str.include? "1223"
-                str.gsub! '1223', '1113'
-              elsif str.include? "12223"
-                str.gsub! '12223', "111113"
-              elsif str.include? "122223"
-                str.gsub! '122223', "111113"
-              elsif str.include? "1222223"
-                str.gsub! '1222223', "1111113"
-              elsif str.include? "12222223"
-                str.gsub! '12222223', "11111113"
-              elsif str.include? "321"
-                str.gsub! '321', "311"
-              elsif str.include? "3221"
-                str.gsub! '3221', "3111"
-              elsif str.include? "32221"
-                str.gsub! '32221', "31111"
-              elsif str.include? "322221"
-                str.gsub! '322221', "311111"
-              elsif str.include? "3222221"
-                str.gsub! '3222221', "3111111"
-              elsif str.include? "32222221"
-                str.gsub! '32222221', "31111111"
-              end
-            end
-          else
-            for i in 0..1  
-              if str.include? "213"
-                str.gsub! '213', '223'
-              elsif str.include? "2113"
-                str.gsub! '2113', '2223'
-              elsif str.include? "21113"
-                str.gsub! '21113', "22223"
-              elsif str.include? "211113"
-                str.gsub! '211113', "2222223"
-              elsif str.include? "2111113"
-                str.gsub! '2111113', "22222223"
-              elsif str.include? "21111113"
-                str.gsub! '21111113', "22222223"
-              elsif str.include? "312"
-                str.gsub! '312', "322"
-              elsif str.include? "3112"
-                str.gsub! '3112', "3222"
-              elsif str.include? "31112"
-                str.gsub! '31112', "32222"
-              elsif str.include? "311112"
-                str.gsub! '311112', "322222"
-              elsif str.include? "3111112"
-                str.gsub! '3111112', "3222222"
-              elsif str.include? "31111112"
-                str.gsub! '31111112', "32222222"
-              end
+      def flip(str, booleon=true)
+        if /^\d*[1]2+[3]2+[1]\d*/.match(str) && booleon == true
+          temp_array = str.split("3")
+          temp_array[0].reverse!
+          temp_array.each do |x|
+            x.each_char.with_index do |char, index| 
+               char == "2" ? x[index] = "1" : break
             end
           end
-        return str
+          temp_array[0].reverse!
+          return temp_array[0] + "3" + temp_array[1]
+        elsif /^\d*[1]2+[3]\d*/.match(str) && booleon == true
+          temp_array = str.split("3")
+          temp_array[0].reverse!
+          temp_array[0].each_char.with_index do |char, index|
+            char == "2" ? temp_array[0][index] = "1" : break
+          end
+          temp_array[0].reverse!
+          if temp_array[1] == nil
+            return temp_array[0] + "3"
+          else
+            return temp_array[0] + "3" + temp_array[1]
+          end
+        elsif /^\d*[3]2+[1]\d*/.match(str) && booleon == true
+          temp_array = str.split("3")
+          temp_array[1].each_char.with_index do |char, index|
+            char == "2" ? temp_array[1][index] = "1" : break
+          end
+          if temp_array[0] == nil
+            return "3" + temp_array[1]
+          else
+            return temp_array[0] + "3" + temp_array[1]
+          end
+          
+        elsif /^\d*[2]1+[3]1+[2]\d*/.match(str) && booleon == false
+          temp_array = str.split("3")
+          temp_array[0].reverse!
+          temp_array.each do |x|
+            x.each_char.with_index do |char, index| 
+               char == "1" ? x[index] = "2" : break
+            end
+          end
+          temp_array[0].reverse!
+          return temp_array[0] + "3" + temp_array[1]
+        elsif /^\d*[2]1+[3]\d*/.match(str) && booleon == false
+          temp_array = str.split("3")
+          temp_array[0].reverse!
+          temp_array[0].each_char.with_index do |char, index|
+            char == "1" ? temp_array[0][index] = "2" : break
+          end
+          temp_array[0].reverse!
+          if temp_array[1] == nil
+            return temp_array[0] + "3"
+          else
+            return temp_array[0] + "3" + temp_array[1]
+          end
+        elsif /^\d*[3]1+[2]\d*/.match(str) && booleon == false
+          temp_array = str.split("3")
+          temp_array[1].each_char.with_index do |char, index|
+            char == "1" ? temp_array[1][index] = "2" : break
+          end
+          if temp_array[0] == nil
+            return "3" + temp_array[0]
+          else
+            return temp_array[0] + "3" + temp_array[1]
+          end
+        else
+          return str
+        end
       end
       
-
 end

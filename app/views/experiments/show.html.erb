@@ -2,16 +2,28 @@
   <div class="row">
     <% if @board_state.count("0") == 0 %>
       <%= render 'finish' %>
-      <%= render 'board', counter: @counter %>
     <% else %>
       <%= render 'board', counter: @counter %>
     <% end %>
   </div>
-  <div class="row center">
-    <%= form_for @experiment  do |f| %>
-      <%= f.hidden_field :choice, :value => nil,
+  <div class="row">
+    <br>
+    <div class="col-xs-8 col-xs-offset-2 score-board center inline padding">
+      <div class="col-xs-3 pull-left">
+        <h3>Player:</h3>
+        <h3><%= @board_state.count("1")%></h3>
+      </div>
+      <div class="inline">
+      <%= form_for @experiment  do |f| %>
+        <%= f.hidden_field :choice, :value => nil,
               id: "hidden" %><br>
-      <%= f.submit "It's go time!", class: "btn btn-primary" %>
-   <% end %>
+        <%= f.submit "It's go time!", class: "btn btn-primary" %>
+      <% end %>
+      </div>
+      <div class="col-xs-3 pull-right inline">
+        <h3>Computer:</h3>
+        <h3><%= @board_state.count("2")%></h3>
+      </div>
+    </div>
   </div>
 </div>

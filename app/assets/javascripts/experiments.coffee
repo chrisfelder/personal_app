@@ -10,6 +10,13 @@ $(document).on "ready page:change", ->
         $(this).append('<div class="current-piece"> </div>')
         $('#hidden').val(currentId)
         
+$(document).on "ready page:change", ->        
+    $(".board-space").on "mouseenter", ->
+        $(this).addClass("highlight-space")
+    $(".board-space").on "mouseleave", ->
+        $(this).removeClass("highlight-space")
+        
+
         
 
         

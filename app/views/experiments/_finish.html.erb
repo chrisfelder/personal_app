@@ -1,6 +1,10 @@
+<div class="center">
 <p>Game Over!</p>
-<% if @board_state.count("1") >= @board_state.count("2") %>
+<% if @board_state.count("1") > @board_state.count("2") %>
   <p>A Winner is you!</p>
+  <%= image_tag("ferret1.jpeg") %>
 <% else %>
-  <p>All your base are belong to us! You lost!</p>
+  <p>You lost! We are not amused...</p>
+  <%= image_tag("queen2.jpg") %>
 <% end %>
+</div>

@@ -1,16 +1,18 @@
 
 
 <div class="container">
-  <%= render 'board', counter: @counter %>
+  <div class="row">
+    <%= render 'board', counter: @counter %>
+  </div>
+  <div class= "row center">
+      <%= form_for @experiment  do |f| %>
+        <br>
+        <%= f.hidden_field :save_state, value: @new_board_state, 
+          class: "form-control" %>
+            
+
+            
+        <%= f.submit "Start Game!", class: "btn btn-primary" %>
+        <% end %>
+  </div>
 </div>
-
-<%= form_for @experiment  do |f| %>
-<br>
-            <%= f.hidden_field :save_state, value: @new_board_state, 
-              class: "form-control" %>
-            
-
-            
-            <%= f.submit "Start Game!", class: "btn btn-primary" %>
-<% end %>
-
