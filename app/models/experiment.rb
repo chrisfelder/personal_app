@@ -7,12 +7,72 @@ class Experiment < ActiveRecord::Base
     def method_benchmark
       n = 50000
       Benchmark.bm do |x|
-        x.report { n.times do; flip("211311221", false); end }
-        x.report { n.times do; flip_substring("211311221", false); end }
+        x.report { n.times do; flip("213", false); end }
+        x.report { n.times do; flip_substring("213", false); end }
       end
     end
-
-
+    
+    def val_table(int, booleon = true)
+      temp_array1= [99, -8, 8, 6, 6, 8, -8, 99]
+      temp_array2= [-8, -24, -4, -3, -3, -4, -24, -8]
+      temp_array3= [8, -4, 7, 4, 4, 7, -4, 8]
+      temp_array4= [6, -3, 4, 0, 0, 4, -3, 6]
+      total_array = [temp_array1, temp_array2, temp_array3, temp_array4,
+                     temp_array4, temp_array3, temp_array2, temp_array1]
+      value_table = []
+        total_array.each do |x|
+         x.each do |y|
+          value_table << y
+        end
+      end
+      
+      return value_table[int]
+    end
+    
+      def minimax(board, depth, booleon)
+        booleon == true ? temp_score = "1": temp_score = "2"
+        children = []
+        
+        if board.count("0") == 0 || depth == 2
+          #change this to return the static evaluation function
+          puts "This is the board count:" + board.count(temp_score).to_s
+          return board.count(temp_score)
+        end
+        
+        #Find all children of the current board state
+        children = list_children(board, booleon)
+        
+        #if(max's turn)
+        if booleon==false
+          score = -100
+          children.each do |x|
+            puts x
+            temp = minimax(x, depth + 1, true)
+            puts "this is the max temp" + temp.to_s
+            if temp > score
+              score = temp
+            end
+          end
+          puts "this is the returned score from max" + score.to_s
+          return score
+        #return maximal score of calling minimax on all the children
+        #else (min's turn)
+        else
+          score = 100
+          children.each do |x|
+            puts x
+            temp = minimax(x, depth + 1, false)
+            puts "this is the min temp" + temp.to_s
+            if temp < score
+              score = temp
+            end
+          end
+          puts "this is the returned score from min" + score.to_s
+          return score
+        #return minimal score of calling minimax on all the children
+        end
+      end
+      
     protected
     
       def test_area
@@ -33,8 +93,6 @@ class Experiment < ActiveRecord::Base
       
       def computer_turn
           current = self.save_state
-          @previous = self.previous_save_state
-          inc = 0
           temp_string = ""
           @saved_string = current.clone
           @max_flip = 0
@@ -43,57 +101,85 @@ class Experiment < ActiveRecord::Base
           temp_count = 0
           saved_count = 0
 
-          temp_save.each_char do |x|
+          temp_save.each_char.with_index do |char, index|
             temp_string = temp_save.clone
-              if check_adjacent(temp_save, inc) == true && x == "0"
-                  
-                 temp_string[inc] = "3"
-                  
+              if check_adjacent(temp_save, index, false) == true && char == "0"
+                 temp_string[index] = "3"
                  temp_string = flip_pieces(temp_string, false)
-                  
-                  temp_count = temp_string.count('2')
+                 temp_count = temp_string.count('2')
 
                   if temp_count > @max_flip
                     @saved_string = temp_string
                     @max_flip = temp_count
-                    saved_count = inc
+                    saved_count = index
                   end
-
               end
-              
-              inc += 1
           end
-
           self.save_state = @saved_string
-          #update_save_states
-          
       end
+      
+
+      def computer_turn_medium(board, depth, booleon)
+        current = self.save_state
+        temp_string = ""
+        @saved_string = current.clone
+        @max_flip = 0
+        temp_save = Experiment.new
+        temp_save = current.clone
+        temp_count = 0
+        saved_count = 0
+        score = 0
+        children = []
+
+          temp_save.each_char.with_index do |char, index|
+            temp_string = temp_save.clone
+              if check_adjacent(temp_save, index, false) == true && char == "0"
+                 temp_string[index] = "3"
+              end
+          end
+      end
+      
+
     
+      #checks for valid moves and returns an array of flipped board states
+      def list_children(board, booleon = true)
+        move_array = []
+        board.each_char.with_index do |char, index|
+          temp_string = board.clone
+            if check_adjacent(temp_string, index, booleon) == true && char == "0"
+              temp_string[index] = "3"
+              temp_string = flip_pieces(temp_string, booleon)
+              move_array << temp_string
+            end
+        end
+        return move_array
+      end
+      
       def update_save_states
         @save_state = self.save_state
         self.previous_save_state = @save_state 
       end
       
-      def flip_pieces(string, boolean=true)
+      def flip_pieces(string, booleon=true)
           #saves the index of the player's move
           string_index = string.index('3')
           current = string.clone
           
           #find row & flip pieces
           @row = find_row(current, string_index)
-          @row = flip(@row, boolean)
+          @row = flip(@row, booleon)
           
           #create collumn
           @collumn = find_collumn(current, string_index)
-          @collumn = flip(@collumn, boolean)
+          @collumn = flip(@collumn, booleon)
           
           #create positive_diagonal
           @positive_diagonal = positive_diagonal(current, string_index)
-          @positive_diagonal = flip(@positive_diagonal, boolean)
+          @positive_diagonal = flip(@positive_diagonal, booleon)
           
           #create negative_diagonal
           @negative_diagonal = negative_diagonal(current, string_index)
-          @negative_diagonal = flip(@negative_diagonal, boolean)
+          @negative_diagonal = flip(@negative_diagonal, booleon)
           
         
           #update the board_state
@@ -103,7 +189,7 @@ class Experiment < ActiveRecord::Base
           current = put_negative_diagonal(current, @negative_diagonal, string_index)
           
           #sets the last played piece to a computer or player piece
-          if boolean == true
+          if booleon == true
             current.gsub! '3', '1'
           else
             current.gsub! '3', '2'
@@ -117,7 +203,8 @@ class Experiment < ActiveRecord::Base
       
 
       
-      def check_adjacent(str, index)
+      def check_adjacent(str, index, booleon = true)
+          booleon == true ? player = "2": player = "1"
           temp_str = ""
           @index = index - 9
           @TL = str[@index]
@@ -155,7 +242,7 @@ class Experiment < ActiveRecord::Base
           end
           
           temp_str.each_char do |x|
-              if x == "1"
+              if x == player
                 @temp = true
                 break
               else
@@ -298,74 +385,141 @@ class Experiment < ActiveRecord::Base
       end
 
       def flip(str, booleon=true)
-        if /^\d*[1]2+[3]2+[1]\d*/.match(str) && booleon == true
-          temp_array = str.split("3")
-          temp_array[0].reverse!
-          temp_array.each do |x|
-            x.each_char.with_index do |char, index| 
-               char == "2" ? x[index] = "1" : break
+        if booleon == true
+          if /^\d*[1]2+[3]2+[1]\d*/.match(str)
+            temp_array = str.split("3")
+            temp_array[0].reverse!
+            temp_array.each do |x|
+              x.each_char.with_index do |char, index| 
+                char == "2" ? x[index] = "1" : break
+              end
             end
-          end
-          temp_array[0].reverse!
-          return temp_array[0] + "3" + temp_array[1]
-        elsif /^\d*[1]2+[3]\d*/.match(str) && booleon == true
-          temp_array = str.split("3")
-          temp_array[0].reverse!
-          temp_array[0].each_char.with_index do |char, index|
-            char == "2" ? temp_array[0][index] = "1" : break
-          end
-          temp_array[0].reverse!
-          if temp_array[1] == nil
-            return temp_array[0] + "3"
-          else
+            temp_array[0].reverse!
             return temp_array[0] + "3" + temp_array[1]
-          end
-        elsif /^\d*[3]2+[1]\d*/.match(str) && booleon == true
-          temp_array = str.split("3")
-          temp_array[1].each_char.with_index do |char, index|
-            char == "2" ? temp_array[1][index] = "1" : break
-          end
-          if temp_array[0] == nil
-            return "3" + temp_array[1]
+          elsif /^\d*[1]2+[3]\d*/.match(str)
+            temp_array = str.split("3")
+            temp_array[0].reverse!
+            temp_array[0].each_char.with_index do |char, index|
+              char == "2" ? temp_array[0][index] = "1" : break
+            end
+            temp_array[0].reverse!
+            if temp_array[1] == nil
+              return temp_array[0] + "3"
+            else
+              return temp_array[0] + "3" + temp_array[1]
+            end
+          elsif /^\d*[3]2+[1]\d*/.match(str)
+            temp_array = str.split("3")
+            temp_array[1].each_char.with_index do |char, index|
+              char == "2" ? temp_array[1][index] = "1" : break
+            end
+            if temp_array[0] == nil
+              return "3" + temp_array[1]
+            else
+              return temp_array[0] + "3" + temp_array[1]
+            end
           else
-            return temp_array[0] + "3" + temp_array[1]
+            return str
           end
-          
-        elsif /^\d*[2]1+[3]1+[2]\d*/.match(str) && booleon == false
-          temp_array = str.split("3")
-          temp_array[0].reverse!
-          temp_array.each do |x|
+        else  
+          if /^\d*[2]1+[3]1+[2]\d*/.match(str)
+            temp_array = str.split("3")
+            temp_array[0].reverse!
+            temp_array.each do |x|
             x.each_char.with_index do |char, index| 
                char == "1" ? x[index] = "2" : break
+              end
+            end
+            temp_array[0].reverse!
+            return temp_array[0] + "3" + temp_array[1]
+          elsif /^\d*[2]1+[3]\d*/.match(str)
+            temp_array = str.split("3")
+            temp_array[0].reverse!
+            temp_array[0].each_char.with_index do |char, index|
+              char == "1" ? temp_array[0][index] = "2" : break
+            end
+            temp_array[0].reverse!
+            if temp_array[1] == nil
+              return temp_array[0] + "3"
+            else
+              return temp_array[0] + "3" + temp_array[1]
+            end
+          elsif /^\d*[3]1+[2]\d*/.match(str)
+            temp_array = str.split("3")
+            temp_array[1].each_char.with_index do |char, index|
+              char == "1" ? temp_array[1][index] = "2" : break
+            end
+            if temp_array[0] == nil
+              return "3" + temp_array[0]
+            else
+              return temp_array[0] + "3" + temp_array[1]
+            end
+          else
+            return str
+          end
+        end
+      end
+      
+      
+      def flip_substring(str, booleon=true)
+          if booleon == true
+            for i in 0..1  
+              if str.include? "123"
+                str.gsub! '123', '113'
+              elsif str.include? "1223"
+                str.gsub! '1223', '1113'
+              elsif str.include? "12223"
+                str.gsub! '12223', "111113"
+              elsif str.include? "122223"
+                str.gsub! '122223', "111113"
+              elsif str.include? "1222223"
+                str.gsub! '1222223', "1111113"
+              elsif str.include? "12222223"
+                str.gsub! '12222223', "11111113"
+              elsif str.include? "321"
+                str.gsub! '321', "311"
+              elsif str.include? "3221"
+                str.gsub! '3221', "3111"
+              elsif str.include? "32221"
+                str.gsub! '32221', "31111"
+              elsif str.include? "322221"
+                str.gsub! '322221', "311111"
+              elsif str.include? "3222221"
+                str.gsub! '3222221', "3111111"
+              elsif str.include? "32222221"
+                str.gsub! '32222221', "31111111"
+              end
+            end
+          else
+            for i in 0..1  
+              if str.include? "213"
+                str.gsub! '213', '223'
+              elsif str.include? "2113"
+                str.gsub! '2113', '2223'
+              elsif str.include? "21113"
+                str.gsub! '21113', "22223"
+              elsif str.include? "211113"
+                str.gsub! '211113', "2222223"
+              elsif str.include? "2111113"
+                str.gsub! '2111113', "22222223"
+              elsif str.include? "21111113"
+                str.gsub! '21111113', "22222223"
+              elsif str.include? "312"
+                str.gsub! '312', "322"
+              elsif str.include? "3112"
+                str.gsub! '3112', "3222"
+              elsif str.include? "31112"
+                str.gsub! '31112', "32222"
+              elsif str.include? "311112"
+                str.gsub! '311112', "322222"
+              elsif str.include? "3111112"
+                str.gsub! '3111112', "3222222"
+              elsif str.include? "31111112"
+                str.gsub! '31111112', "32222222"
+              end
             end
           end
-          temp_array[0].reverse!
-          return temp_array[0] + "3" + temp_array[1]
-        elsif /^\d*[2]1+[3]\d*/.match(str) && booleon == false
-          temp_array = str.split("3")
-          temp_array[0].reverse!
-          temp_array[0].each_char.with_index do |char, index|
-            char == "1" ? temp_array[0][index] = "2" : break
-          end
-          temp_array[0].reverse!
-          if temp_array[1] == nil
-            return temp_array[0] + "3"
-          else
-            return temp_array[0] + "3" + temp_array[1]
-          end
-        elsif /^\d*[3]1+[2]\d*/.match(str) && booleon == false
-          temp_array = str.split("3")
-          temp_array[1].each_char.with_index do |char, index|
-            char == "1" ? temp_array[1][index] = "2" : break
-          end
-          if temp_array[0] == nil
-            return "3" + temp_array[0]
-          else
-            return temp_array[0] + "3" + temp_array[1]
-          end
-        else
-          return str
-        end
+        return str
       end
       
 end
