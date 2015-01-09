@@ -12,7 +12,7 @@ class Experiment < ActiveRecord::Base
       end
     end
     
-    def val_table(int, booleon = true)
+    def val_table(int, boolean = true)
       temp_array1= [99, -8, 8, 6, 6, 8, -8, 99]
       temp_array2= [-8, -24, -4, -3, -3, -4, -24, -8]
       temp_array3= [8, -4, 7, 4, 4, 7, -4, 8]
@@ -29,58 +29,81 @@ class Experiment < ActiveRecord::Base
       return value_table[int]
     end
     
-      def minimax(board, depth, booleon)
-        booleon == true ? temp_score = "1": temp_score = "2"
+    def evaluation_function(board, boolean)
+    end
+    
+    def computer_turn_medium(board, depth, boolean)
+        score = -100
+        temp_score = 0
+        children = []
+        moves = []
+        #scores = []
+        
+        children = list_children(board, boolean)
+        if children == [] then return board end
+        
+        children.each do |x|
+          temp_score = minimax(x, depth + 1, !boolean)
+          #scores << temp_score
+          if temp_score > score
+            moves = []
+            score = temp_score
+            moves << x
+          elsif temp_score == score
+            moves << x
+          end
+        end
+        moves_length = moves.count
+        random_move = rand(0..moves_length - 1)
+        return moves[random_move]
+    end
+    
+    def minimax(board, depth, boolean)
+        boolean == true ? temp_score = "1": temp_score = "2"
         children = []
         
         if board.count("0") == 0 || depth == 2
           #change this to return the static evaluation function
-          puts "This is the board count:" + board.count(temp_score).to_s
+          #puts "This is the board count:" + board.count(temp_score).to_s
           return board.count(temp_score)
         end
         
         #Find all children of the current board state
-        children = list_children(board, booleon)
+        children = list_children(board, boolean)
         
         #if(max's turn)
-        if booleon==false
+        if boolean==false
           score = -100
           children.each do |x|
-            puts x
+            #puts x
             temp = minimax(x, depth + 1, true)
-            puts "this is the max temp" + temp.to_s
+            #puts "this is the max temp" + temp.to_s
             if temp > score
               score = temp
             end
           end
-          puts "this is the returned score from max" + score.to_s
+          #puts "this is the returned score from max" + score.to_s
           return score
         #return maximal score of calling minimax on all the children
         #else (min's turn)
         else
           score = 100
           children.each do |x|
-            puts x
+            #puts x
             temp = minimax(x, depth + 1, false)
-            puts "this is the min temp" + temp.to_s
+            #puts "this is the min temp" + temp.to_s
             if temp < score
               score = temp
             end
           end
-          puts "this is the returned score from min" + score.to_s
+          #puts "this is the returned score from min" + score.to_s
           return score
         #return minimal score of calling minimax on all the children
         end
-      end
+    end
       
     protected
     
-      def test_area
-          @test_string = self.save_state
-          @index = self.save_state.index('3')
-
-      end
-      
       def set_previous_save_state
           self.previous_save_state = "0" * 27 + "12" + "0" * 6 + "21" + "0" * 27
       end
@@ -92,12 +115,20 @@ class Experiment < ActiveRecord::Base
       end
       
       def computer_turn
-          current = self.save_state
+        current = self.save_state
+        temp_save = Experiment.new
+        temp_save = current.clone
+        temp_save = computer_turn_medium(temp_save, 0,false)
+        #temp_save = computer_turn_easy(temp_save)
+        self.save_state = temp_save
+      end
+      
+      def computer_turn_easy(board)
           temp_string = ""
-          @saved_string = current.clone
+          @saved_string = board.clone
           @max_flip = 0
           temp_save = Experiment.new
-          temp_save = current.clone
+          temp_save = board.clone
           temp_count = 0
           saved_count = 0
 
@@ -115,40 +146,17 @@ class Experiment < ActiveRecord::Base
                   end
               end
           end
-          self.save_state = @saved_string
+          return @saved_string
       end
       
-
-      def computer_turn_medium(board, depth, booleon)
-        current = self.save_state
-        temp_string = ""
-        @saved_string = current.clone
-        @max_flip = 0
-        temp_save = Experiment.new
-        temp_save = current.clone
-        temp_count = 0
-        saved_count = 0
-        score = 0
-        children = []
-
-          temp_save.each_char.with_index do |char, index|
-            temp_string = temp_save.clone
-              if check_adjacent(temp_save, index, false) == true && char == "0"
-                 temp_string[index] = "3"
-              end
-          end
-      end
-      
-
-    
       #checks for valid moves and returns an array of flipped board states
-      def list_children(board, booleon = true)
+      def list_children(board, boolean = true)
         move_array = []
         board.each_char.with_index do |char, index|
           temp_string = board.clone
-            if check_adjacent(temp_string, index, booleon) == true && char == "0"
+            if check_adjacent(temp_string, index, boolean) == true && char == "0"
               temp_string[index] = "3"
-              temp_string = flip_pieces(temp_string, booleon)
+              temp_string = flip_pieces(temp_string, boolean)
               move_array << temp_string
             end
         end
@@ -160,26 +168,26 @@ class Experiment < ActiveRecord::Base
         self.previous_save_state = @save_state 
       end
       
-      def flip_pieces(string, booleon=true)
+      def flip_pieces(string, boolean=true)
           #saves the index of the player's move
           string_index = string.index('3')
           current = string.clone
           
           #find row & flip pieces
           @row = find_row(current, string_index)
-          @row = flip(@row, booleon)
+          @row = flip(@row, boolean)
           
           #create collumn
           @collumn = find_collumn(current, string_index)
-          @collumn = flip(@collumn, booleon)
+          @collumn = flip(@collumn, boolean)
           
           #create positive_diagonal
           @positive_diagonal = positive_diagonal(current, string_index)
-          @positive_diagonal = flip(@positive_diagonal, booleon)
+          @positive_diagonal = flip(@positive_diagonal, boolean)
           
           #create negative_diagonal
           @negative_diagonal = negative_diagonal(current, string_index)
-          @negative_diagonal = flip(@negative_diagonal, booleon)
+          @negative_diagonal = flip(@negative_diagonal, boolean)
           
         
           #update the board_state
@@ -189,7 +197,7 @@ class Experiment < ActiveRecord::Base
           current = put_negative_diagonal(current, @negative_diagonal, string_index)
           
           #sets the last played piece to a computer or player piece
-          if booleon == true
+          if boolean == true
             current.gsub! '3', '1'
           else
             current.gsub! '3', '2'
@@ -203,8 +211,8 @@ class Experiment < ActiveRecord::Base
       
 
       
-      def check_adjacent(str, index, booleon = true)
-          booleon == true ? player = "2": player = "1"
+      def check_adjacent(str, index, boolean = true)
+          boolean == true ? player = "2": player = "1"
           temp_str = ""
           @index = index - 9
           @TL = str[@index]
@@ -384,8 +392,8 @@ class Experiment < ActiveRecord::Base
           return save_string
       end
 
-      def flip(str, booleon=true)
-        if booleon == true
+      def flip(str, boolean=true)
+        if boolean == true
           if /^\d*[1]2+[3]2+[1]\d*/.match(str)
             temp_array = str.split("3")
             temp_array[0].reverse!
@@ -461,8 +469,8 @@ class Experiment < ActiveRecord::Base
       end
       
       
-      def flip_substring(str, booleon=true)
-          if booleon == true
+      def flip_substring(str, boolean=true)
+          if boolean == true
             for i in 0..1  
               if str.include? "123"
                 str.gsub! '123', '113'
