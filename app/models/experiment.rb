@@ -29,17 +29,126 @@ class Experiment < ActiveRecord::Base
       return value_table[int]
     end
     
+    def frontier_tiles(board, boolean)
+      board.each_char.with_index do |char, index|
+        #check for player's piece, add to player count, add val_table to d
+        #if opponent piece add to opponent count, subtract val_table to d
+        #if "0" then 
+      end
+    end
+    
+    def mobility_score(board, boolean)
+      score = 0
+      my_discs = list_children(board, boolean).count
+      opponent_discs = list_children(board, !boolean).count
+      
+      if(my_discs > opponent_discs)
+        return ((100.0 * my_discs)/(my_discs + opponent_discs)).to_int
+      elsif (my_discs < opponent_discs)
+       return ((100.0 * -1 * opponent_discs)/(my_discs + opponent_discs)).to_int
+      else
+        return score
+      end
+      
+    end
+    
     def evaluation_function(board, boolean)
+      temp_board = board.clone
+      score = (corner_score(temp_board, boolean) * 800) + (mobility_score(temp_board, boolean) * 79) #+ (corner_closeness(temp_board, boolean) * 380)
+      puts "this is the board state" + board.to_s
+      return score
+    end
+    
+    def corner_score(board, boolean)
+      my_pieces = 0 
+      opponent_pieces = 0
+      board_state = [0, 7, 56, 63]
+
+      if boolean == true 
+        my_piece = "1"
+        opp_piece = "2"
+      else
+        my_piece = "2"
+        opp_piece = "1"
+      end
+
+      board_state.each do |index|
+        if(board[index] == my_piece)
+          my_pieces += 1
+        elsif (board[index] == opp_piece)
+          opponent_pieces += 1
+        end
+      end
+      
+       return 25 * (my_pieces - opponent_pieces)
+    end
+    
+    def corner_closeness(board, boolean)
+      my_count = 0
+      opponent_count = 0
+      
+      if boolean == true
+        my_discs = "1"
+        opponent_discs = "2"
+      else
+        my_discs = "2"
+        opponent_discs = "1"
+      end
+      
+      if board[0] = "0"
+        [1, 8, 9].each do |x|
+          if board[x] == my_discs
+            my_count += 1
+          elsif board[x] == opponent_discs
+            opponent_count += 1
+          end
+        end
+      end
+      
+      if board[7] = "0"
+        [6, 14, 15].each do |x|
+          if board[x] == my_discs
+            my_count += 1
+          elsif board[x] == opponent_discs
+            opponent_count += 1
+          end
+        end
+      end
+      
+      if board[56] = "0"
+        [48, 49, 57].each do |x|
+          if board[x] == my_discs
+            my_count += 1
+          elsif board[x] == opponent_discs
+            opponent_count += 1
+          end
+        end
+      end
+      
+      if board[63] = "0"
+        [54, 55, 62].each do |x|
+          if board[x] == my_discs
+            my_count += 1
+          elsif board[x] == opponent_discs
+            opponent_count += 1
+          end
+        end
+      end
+      
+      score = (-12.5 * (my_count - opponent_count)).to_int
+      return score
     end
     
     def computer_turn_medium(board, depth, boolean)
-        score = -100
+        score = -10000000
         temp_score = 0
         children = []
         moves = []
         #scores = []
         
         children = list_children(board, boolean)
+        puts children
+        #remember to add back the condition that the board is empty to return
         if children == [] then return board end
         
         children.each do |x|
@@ -65,19 +174,20 @@ class Experiment < ActiveRecord::Base
         if board.count("0") == 0 || depth == 2
           #change this to return the static evaluation function
           #puts "This is the board count:" + board.count(temp_score).to_s
-          return board.count(temp_score)
+          #return board.count(temp_score)
+          return evaluation_function(board, boolean)
         end
         
         #Find all children of the current board state
         children = list_children(board, boolean)
-        
+        puts children
         #if(max's turn)
         if boolean==false
-          score = -100
+          score = -1000000000
           children.each do |x|
             #puts x
             temp = minimax(x, depth + 1, true)
-            #puts "this is the max temp" + temp.to_s
+            puts "this is the max temp" + temp.to_s
             if temp > score
               score = temp
             end
@@ -87,11 +197,11 @@ class Experiment < ActiveRecord::Base
         #return maximal score of calling minimax on all the children
         #else (min's turn)
         else
-          score = 100
+          score = 10000000000
           children.each do |x|
             #puts x
             temp = minimax(x, depth + 1, false)
-            #puts "this is the min temp" + temp.to_s
+            puts "this is the min temp" + temp.to_s
             if temp < score
               score = temp
             end
@@ -151,21 +261,20 @@ class Experiment < ActiveRecord::Base
       
       #checks for valid moves and returns an array of flipped board states
       def list_children(board, boolean = true)
+        temp_board = board.clone
+        boolean == true ? my_discs = "1": my_discs = "2"
         move_array = []
-        board.each_char.with_index do |char, index|
+        temp_board.each_char.with_index do |char, index|
           temp_string = board.clone
             if check_adjacent(temp_string, index, boolean) == true && char == "0"
               temp_string[index] = "3"
               temp_string = flip_pieces(temp_string, boolean)
-              move_array << temp_string
+                if temp_string.count(my_discs) > board.count(my_discs) + 1
+                  move_array << temp_string
+                end
             end
         end
         return move_array
-      end
-      
-      def update_save_states
-        @save_state = self.save_state
-        self.previous_save_state = @save_state 
       end
       
       def flip_pieces(string, boolean=true)
@@ -202,20 +311,14 @@ class Experiment < ActiveRecord::Base
           else
             current.gsub! '3', '2'
           end
-          
-          #self.save_state = @current
-          
-          
+
           return current
       end
-      
-
       
       def check_adjacent(str, index, boolean = true)
           boolean == true ? player = "2": player = "1"
           temp_str = ""
-          @index = index - 9
-          @TL = str[@index]
+          @TL = str[index - 9]
           @index = index - 8
           @T  = str[@index]
           @index = index - 7
@@ -467,67 +570,5 @@ class Experiment < ActiveRecord::Base
           end
         end
       end
-      
-      
-      def flip_substring(str, boolean=true)
-          if boolean == true
-            for i in 0..1  
-              if str.include? "123"
-                str.gsub! '123', '113'
-              elsif str.include? "1223"
-                str.gsub! '1223', '1113'
-              elsif str.include? "12223"
-                str.gsub! '12223', "111113"
-              elsif str.include? "122223"
-                str.gsub! '122223', "111113"
-              elsif str.include? "1222223"
-                str.gsub! '1222223', "1111113"
-              elsif str.include? "12222223"
-                str.gsub! '12222223', "11111113"
-              elsif str.include? "321"
-                str.gsub! '321', "311"
-              elsif str.include? "3221"
-                str.gsub! '3221', "3111"
-              elsif str.include? "32221"
-                str.gsub! '32221', "31111"
-              elsif str.include? "322221"
-                str.gsub! '322221', "311111"
-              elsif str.include? "3222221"
-                str.gsub! '3222221', "3111111"
-              elsif str.include? "32222221"
-                str.gsub! '32222221', "31111111"
-              end
-            end
-          else
-            for i in 0..1  
-              if str.include? "213"
-                str.gsub! '213', '223'
-              elsif str.include? "2113"
-                str.gsub! '2113', '2223'
-              elsif str.include? "21113"
-                str.gsub! '21113', "22223"
-              elsif str.include? "211113"
-                str.gsub! '211113', "2222223"
-              elsif str.include? "2111113"
-                str.gsub! '2111113', "22222223"
-              elsif str.include? "21111113"
-                str.gsub! '21111113', "22222223"
-              elsif str.include? "312"
-                str.gsub! '312', "322"
-              elsif str.include? "3112"
-                str.gsub! '3112', "3222"
-              elsif str.include? "31112"
-                str.gsub! '31112', "32222"
-              elsif str.include? "311112"
-                str.gsub! '311112', "322222"
-              elsif str.include? "3111112"
-                str.gsub! '3111112', "3222222"
-              elsif str.include? "31111112"
-                str.gsub! '31111112', "32222222"
-              end
-            end
-          end
-        return str
-      end
-      
+
 end
