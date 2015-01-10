@@ -53,9 +53,42 @@ class Experiment < ActiveRecord::Base
     end
     
     def evaluation_function(board, boolean)
+      if boolean == true 
+        my_piece = "1"
+        opp_piece = "2"
+      else
+        my_piece = "2"
+        opp_piece = "1"
+      end
+      
+      my_discs = 0
+      opponent_discs = 0
+      total_disc_score = 0
+      
+      disc_value_sum = 0
       temp_board = board.clone
-      score = (corner_score(temp_board, boolean) * 800) + (mobility_score(temp_board, boolean) * 79) #+ (corner_closeness(temp_board, boolean) * 380)
-      puts "this is the board state" + board.to_s
+      temp_board.each_char.with_index do |char, index|
+        if char == my_piece
+          disc_value_sum += val_table(index)
+          my_discs += 1
+        elsif char == opp_piece
+          disc_value_sum -= val_table(index)
+          opponent_discs += 1
+        end
+      end
+      
+      if my_discs > opponent_discs
+        total_disc_score = (100 * my_discs)/(my_discs + opponent_discs)
+      elsif my_discs < opponent_discs
+        total_disc_score = (100 * opponent_discs)/(my_discs + opponent_discs)
+      end
+      
+      score = (corner_score(temp_board, boolean) * 800) + 
+              (mobility_score(temp_board, boolean) * 79) + 
+              (corner_closeness(temp_board, boolean) * 380) +
+              (total_disc_score * 10) +
+              (disc_value_sum * 10)
+              
       return score
     end
     
@@ -140,14 +173,13 @@ class Experiment < ActiveRecord::Base
     end
     
     def computer_turn_medium(board, depth, boolean)
-        score = -10000000
+        score = -1000000000
         temp_score = 0
         children = []
         moves = []
         #scores = []
         
         children = list_children(board, boolean)
-        puts children
         #remember to add back the condition that the board is empty to return
         if children == [] then return board end
         
@@ -180,14 +212,12 @@ class Experiment < ActiveRecord::Base
         
         #Find all children of the current board state
         children = list_children(board, boolean)
-        puts children
         #if(max's turn)
         if boolean==false
           score = -1000000000
           children.each do |x|
             #puts x
             temp = minimax(x, depth + 1, true)
-            puts "this is the max temp" + temp.to_s
             if temp > score
               score = temp
             end
@@ -201,7 +231,6 @@ class Experiment < ActiveRecord::Base
           children.each do |x|
             #puts x
             temp = minimax(x, depth + 1, false)
-            puts "this is the min temp" + temp.to_s
             if temp < score
               score = temp
             end
@@ -220,8 +249,15 @@ class Experiment < ActiveRecord::Base
       
       def player_turn
           current = self.save_state
-          current = flip_pieces(current, true)
-          self.save_state = current
+          if current.count("3") == 0
+            self.save_state = current
+          else
+            current.each_char.with_index do |char, index|
+              if char == "4" then current[index] = "0" end
+            end
+            current = flip_pieces(current, true)
+            self.save_state = current
+          end
       end
       
       def computer_turn
@@ -230,6 +266,10 @@ class Experiment < ActiveRecord::Base
         temp_save = current.clone
         temp_save = computer_turn_medium(temp_save, 0,false)
         #temp_save = computer_turn_easy(temp_save)
+        index_array = list_children(temp_save, true, true)
+        index_array.each do |x|
+          temp_save[x] = "4"
+        end
         self.save_state = temp_save
       end
       
@@ -260,10 +300,11 @@ class Experiment < ActiveRecord::Base
       end
       
       #checks for valid moves and returns an array of flipped board states
-      def list_children(board, boolean = true)
+      def list_children(board, boolean = true, spaces = false)
         temp_board = board.clone
         boolean == true ? my_discs = "1": my_discs = "2"
         move_array = []
+        move_spaces = []
         temp_board.each_char.with_index do |char, index|
           temp_string = board.clone
             if check_adjacent(temp_string, index, boolean) == true && char == "0"
@@ -271,10 +312,11 @@ class Experiment < ActiveRecord::Base
               temp_string = flip_pieces(temp_string, boolean)
                 if temp_string.count(my_discs) > board.count(my_discs) + 1
                   move_array << temp_string
+                  move_spaces << index
                 end
             end
         end
-        return move_array
+        spaces == true ?  move_spaces : move_array
       end
       
       def flip_pieces(string, boolean=true)

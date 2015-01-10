@@ -12,8 +12,8 @@ class ExperimentsController < ApplicationController
     @experiment = Experiment.find(params[:id])
     @counter = 0
     @board_state = @experiment.save_state
-    @test_state = "0120120101201201012012010120120101201201012012010120120101201201"
     @test = 0
+    
   end
 
   def forms
@@ -23,7 +23,7 @@ class ExperimentsController < ApplicationController
   def reversi
     @experiment = Experiment.new
     @counter = 0
-    @new_board_state = "0" * 27 + "12" + "0" * 6 + "21" + "0" * 27
+    @new_board_state = "0" * 19 + "4" + "0" * 7 + "124" + "0" * 4 + "421" + "0" * 6 + "4" + "0" * 20
     @board_state = "0120120101201201012012010120120101201201012012010120120101201201"
   end
   
@@ -57,11 +57,13 @@ class ExperimentsController < ApplicationController
       @temp_experiment = Experiment.find(params[:id])
       @temp_board_state = @temp_experiment.save_state 
       @choice = params[:experiment][:choice]
-      if @choice == ""
+      if @choice == "" && @temp_board_state.count("4") != 0
         flash[:danger] = 'Click on the board!'
         redirect_to @temp_experiment
-      else
+      elsif @choice != "" && @temp_board_state.count("4") != 0
         @temp_board_state[@choice.to_i] = "3"
+      else
+        #Not sure what to put here
       end
       params[:experiment][:save_state] = @temp_board_state
       params[:experiment].delete("choice")

@@ -7,9 +7,12 @@
         <div id = <%= counter.to_s %> class = "col-xs-1 col-xs-offset-2 board-space">
           <div class = "player-piece"></div>
         </div>
-        <% else %>
+        <% elsif x == "2"%>
         <div id = <%= counter.to_s %> class = "col-xs-1 col-xs-offset-2 board-space">
           <div class = "opponent-piece"></div>
+        </div>
+        <% else %>
+        <div id = <%= counter.to_s %> class = "col-xs-1 col-xs-offset-2 valid-space ">
         </div>
         <% end %>
       <% else %>
@@ -20,9 +23,12 @@
         <div id = <%= counter.to_s %> class = "col-xs-1 board-space">
           <div class = "player-piece"></div>
         </div>
-        <% else %>
+        <% elsif x == "2" %>
         <div id =<%= counter.to_s %> class = "col-xs-1 board-space">
           <div class = "opponent-piece"></div>
+        </div>
+        <% else %>
+          <div id = <%= counter.to_s %> class = "col-xs-1 valid-space ">
         </div>
         <% end %>
       <% end %>
