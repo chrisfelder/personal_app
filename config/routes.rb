@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
 
+  get 'eyetracking' => 'projects#eyetracking'
+
   root 'static_pages#home'
   
   resources :experiments

@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row center">
+        <h3> Eye-tracking Study</h3>
+        <br>
+    </div>
+    <div = "row">
+        <p>This projected originated with Dr. Miller's work on
+        <%= link_to 'attention to alternatives',
+        "http://ruby.fgcu.edu/courses/twimberley/10199/psy/Inattentive.pdf" %>
+      . Having studied close relationships for several years, he observed that
+      romantic partners typically downplay the attractiveness of potential alternatives
+      partners. For example, a heterosexual male in a romantic relationship 
+      will typically perceive other women as less attractive, assuming he is
+      currently satisfied in the relationship. He later found in subsequent studies
+      that attention to alternatives served as a better predictor of relationship
+      outcomes (i.e., whether relationships continue or fail over time) than other
+      measures such as self reported measures of romantic love, commitment, and 
+      current relationship satisfaction.
+       attractive</p>
+       
+       <p>
+           Based on earlier studies that found individuals scoring higher in
+           attention to alternatives found it more difficult to disengage attractive
+           pictures versus normal pictures of potential partners Dr. Miller
+           developed a scale for measuring attention to alternatives. In the potential
+           methodology, participants in relationships would view two side-by-side
+           images of potential partners, and their gaze would be tracked. Dr. Miller
+           requested the application include measures for which image was viewed first
+           and how long each individual's gaze was attuned to each picture.
+           </p><p>
+           My role in this project was to develop a method for deciphering the
+           output of an eye-tracking instrument to further test the validity of the scale.
+           I set out to develop an application capable of parsing the eye-tracking output
+           in such a way that most of the statistical analyses would be conducted
+           by the application. This would allow potentially any individual to input
+           an output file and receive an interpretation of the results. 
+           </p><p>
+           Early iterations of the program were designed in Excel using conditional
+           statements and measures of variance to determine deviations beyond a 
+           certain maximum value away from a central point in the center of the screen.
+           The application was capable of determining both how long a participant viewed
+           each picture and which image was viewed first. However, there were several
+           limitation inherent to design of the application. A calibration slide was
+           required between each set of pictures due to shifts in the central point
+           over time. Additionally, users were required to manually indicate which values
+           from an ASCII output file required analysis.
+           </p><p>
+           Rather than continue utilizing Excel and VBA to extend the functionality
+           of the application, I decided rewrite the application in Python. This
+           would allow for files to be selected and parsed automatically. Furthermore,
+           it allowed for more complex analyses of variance between slides to account
+           for the drift in the center point over time. This reduced the number of
+           calibration slides required to one initial calibration.
+           </p><p>
+           Future version of this application will be written in Ruby to make use
+           of the Ruby on Rails framework. This will allow students to access the
+           application remotely from any location.
+
+           <p>
+            
+           </p>
+       </p>
+    </div>
+</div>
