@@ -16,6 +16,8 @@
             <ul class="dropdown-menu">
               <li><%= link_to "Profile", current_user %></li>
               <li><%= link_to "Settings", '#' %></li>
+              <% #if there is a routing error, it is most likely the following %>
+              <li><%= link_to "Characters", user_characters_path(current_user) %></li>
               <li class="divider"></li>
               <li>
                 <%= link_to "Log out", logout_path, method: "delete" %>
