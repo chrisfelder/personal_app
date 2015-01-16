@@ -8,6 +8,9 @@ class ExperimentsController < ApplicationController
     @user = User.new
   end
   
+  def interview
+  end
+  
   def show
     @experiment = Experiment.find(params[:id])
     @counter = 0

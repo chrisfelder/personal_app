@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 
   get 'eyetracking' => 'projects#eyetracking'
+  
+  get 'interview' => 'experiments#interview'
 
   root 'static_pages#home'
   
