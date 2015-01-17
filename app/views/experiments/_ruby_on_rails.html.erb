@@ -1,2 +1,22 @@
 <h2>What is a block?</h2>
 The simplest of Ruby closures, it accepts a code fragment.
+
+<h2>How does Ruby on Rails protect from CSRF attempts?</h2>
+<p>Cross-Site Request Forgery are attempts by attackers to modify an
+application state of an authenticated user often by having the user click on
+an image or link with malicious code. Often the hidden code sends a request to a web
+server with an active session such that the user is unaware.
+
+Rails protects against these attacks in several ways.<br> <br>For example:<br>
+<br>
+By default the <i>resources</i> routing helper directs specific HTTP requests
+to default actions (e.g., POST requets are routed to <i>create</i>).
+Additionally, each rendered page includes the csrf_meta_tags method to invalidate
+CSRF attempts. All requests to the web server are checked against a validation 
+token to make sure they are legitimate requests from the client. In short,
+Rails verifies that the received token matches that of the session token. Since
+a CSRF does not contain the token, the request fails.<br><br>
+Due to GET requests not being protected by default, as they do not write to the
+database, Rails only limits GET requests for javascript responses to XHR and Ajax
+requests.
+</p>

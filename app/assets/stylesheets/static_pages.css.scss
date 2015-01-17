@@ -39,6 +39,15 @@ $gray-medium-light: #eaeaea;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  font-family: 'Verdana';
+}
+
+.nav.navbar-nav li a {
+  color:  #AAB4D7;
+}
+
+.nav.navbar-nav li a:hover {
+  color:  #182352;
 }
 
 #logo:hover {
@@ -46,6 +55,10 @@ $gray-medium-light: #eaeaea;
   text-decoration: none;
 }
 
+.navbar-custom {
+  background-color: #182352;
+  color: #AAB4D7;
+}
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
