@@ -1,5 +1,19 @@
 <h2>What is a block?</h2>
-The simplest of Ruby closures, it accepts a code fragment.
+<p>The simplest of Ruby closures, blocs are executable bits of code. Blocs are often
+passed into a method as an attribute and interact with the method. Blocks are 
+basically procs that are not saved.</p>
+
+<h2>What is a proc?</h2>
+<p>Similar to blocks, procs are reusable bits of code. Ruby achieves this by
+saving the code as an object. If called within a method, the returned value of
+the proc will terminate the current method and return the result of the proc.</p>
+
+<h2>What are lambdas?</h2>
+<p> Lambdas are similar to procs, they are reusable bits of code that are saved
+as a variable. However, they also check the number of arguments passed, and
+throw an error if they are not the same. Lambdas behave similar to methods in
+that they return a value to the method in which they are called without
+terminating the method.</p>
 
 <h2>How does Ruby on Rails protect from CSRF attempts?</h2>
 <p>Cross-Site Request Forgery are attempts by attackers to modify an
@@ -10,13 +24,14 @@ server with an active session such that the user is unaware.
 Rails protects against these attacks in several ways.<br> <br>For example:<br>
 <br>
 By default the <i>resources</i> routing helper directs specific HTTP requests
-to default actions (e.g., POST requets are routed to <i>create</i>).
+to default actions (e.g., POST requests are routed to <i>create</i>).
 Additionally, each rendered page includes the csrf_meta_tags method to invalidate
 CSRF attempts. All requests to the web server are checked against a validation 
-token to make sure they are legitimate requests from the client. In short,
+token to make sure they are legitimate requests from the client. This validation
+token is provided by default in the application controller calling the
+protect_from_forgery with: :exception method. In short,
 Rails verifies that the received token matches that of the session token. Since
-a CSRF does not contain the token, the request fails.<br><br>
-Due to GET requests not being protected by default, as they do not write to the
-database, Rails only limits GET requests for javascript responses to XHR and Ajax
-requests.
+a CSRF does not contain the token, the request throws an exception. If sessions
+are in use, it is also possible to sign the user out upon receiving an invalid
+authentication token.
 </p>
