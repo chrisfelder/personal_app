@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141229071734) do
+ActiveRecord::Schema.define(version: 20141225213356) do
 
   create_table "characters", force: true do |t|
     t.string   "name"
@@ -33,9 +33,8 @@ ActiveRecord::Schema.define(version: 20141229071734) do
 
   create_table "experiments", force: true do |t|
     t.string   "save_state"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.string   "previous_save_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "experiments", ["save_state"], name: "index_experiments_on_save_state"

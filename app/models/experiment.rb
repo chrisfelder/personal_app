@@ -1,6 +1,5 @@
 class Experiment < ActiveRecord::Base
     require 'benchmark'
-    before_create :set_previous_save_state
     before_update :player_turn, :computer_turn
     validates :save_state, presence: true
 
@@ -242,10 +241,7 @@ class Experiment < ActiveRecord::Base
     end
       
     protected
-    
-      def set_previous_save_state
-          self.previous_save_state = "0" * 27 + "12" + "0" * 6 + "21" + "0" * 27
-      end
+
       
       def player_turn
           current = self.save_state

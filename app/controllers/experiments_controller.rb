@@ -5,7 +5,6 @@ class ExperimentsController < ApplicationController
   end
   
   def new
-    @user = User.new
   end
   
   def interview
@@ -35,7 +34,6 @@ class ExperimentsController < ApplicationController
     if @experiment.save
       respond_to do |format|
         format.html {redirect_to @experiment}
-        format.js
       end
     else
       render 'reversi'
