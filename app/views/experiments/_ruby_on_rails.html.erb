@@ -15,11 +15,66 @@ throw an error if they are not the same. Lambdas behave similar to methods in
 that they return a value to the method in which they are called without
 terminating the method.</p>
 
+<h2>Explain the difference between public, private, and protected methods</h2>
+<p>
+    From <%= link_to 'Ruby Private Methods vs. Protected Methods', 
+    'http://matthodan.com/2010/08/08/ruby-private-methods-vs-protected-methods.html'
+    %>:
+    <br><br>
+    <strong>Public</strong> methods are accessible from within any object.<br><br>
+    
+    <strong>Protected</strong> methods can be called with an explicit receiver
+    They are accessible within the same object or any children objects.
+    <br><br>
+    
+    <strong>Private</strong> methods cannot be called with an explicit receiver.
+    They can only be called within the current object. One object cannot access
+    another objects private methods.
+    <br><br>    
+    So what is an explicit receiver?<br><br>
+    
+
+    The explicit receiver is the object receiving the message. For example, when
+    creating an instance of an object and calling a private method, the instance
+    variable is the explicit receiver. Even when calling the method on self, self 
+    acts as an explicit receiver. However, if the method is called without 
+    explicitly using self (e.g., private_method(value) instead of 
+    self.private_method(value)), self acts as an implicit receiver, allowing
+    access to private methods.
+</p>
+
+<h2>How do hashing functions work?</h2>
+<p>
+    From <%= link_to 'Security of Cryptographic Hash Functions',
+    'http://en.wikipedia.org/wiki/Security_of_cryptographic_hash_functions'%>
+    
+    Typically, hashing functions take a message, the data to be hashed, split 
+    the message and mix it using bitwise operations, modular additions, and compression functions to
+    create a highly complex digest. Passwords and other sensitive information
+    are often hashed before saving the values to a database to prevent attackers
+    from gaining access to the data should they obtain a copy of the database.
+    Hashing functions must best pre-image resistant, second pre-image resistant, and
+    collision resistant.
+    <br><br>
+    From <%= link_to 'Merkle–Damgård construction', 'http://en.wikipedia.org/wiki/Merkle%E2%80%93Damg%C3%A5rd_construction' %>
+    <br><br>
+    Most hashing functions utilize a Merkle-Damgard construction that splits
+    strings of n length into a series of equal sized blocks. The blocks are then
+    operated on using a one-way compression function. The final block is
+    length padded before combining the blocks into a digest.
+
+    
+</p>
+
+
+
+
 <h2>How does Ruby on Rails protect from CSRF attempts?</h2>
 <p>Cross-Site Request Forgery are attempts by attackers to modify an
 application state of an authenticated user often by having the user click on
 an image or link with malicious code. Often the hidden code sends a request to a web
 server with an active session such that the user is unaware.
+
 
 Rails protects against these attacks in several ways.<br> <br>For example:<br>
 <br>
@@ -29,7 +84,8 @@ Additionally, each rendered page includes the csrf_meta_tags method to invalidat
 CSRF attempts. All requests to the web server are checked against a validation 
 token to make sure they are legitimate requests from the client. This validation
 token is provided by default in the application controller calling the
-protect_from_forgery with: :exception method. In short,
+protect_from_forgery with: :exception method.</p>
+<p>In short,
 Rails verifies that the received token matches that of the session token. Since
 a CSRF does not contain the token, the request throws an exception. If sessions
 are in use, it is also possible to sign the user out upon receiving an invalid
