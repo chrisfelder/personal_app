@@ -10,6 +10,9 @@ class ExperimentsController < ApplicationController
   def interview
   end
   
+  def euler
+  end
+  
   def show
     @experiment = Experiment.find(params[:id])
     @counter = 0

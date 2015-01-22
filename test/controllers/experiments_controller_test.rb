@@ -17,6 +17,11 @@ class ExperimentsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "should get euler" do
+    get :euler
+    assert_response :success
+  end
+  
   test "should get reversi" do
     get :reversi
     assert_response :success

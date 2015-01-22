@@ -198,6 +198,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.2.0)
       json (~> 1.4)
+    rouge (1.7.7)
     ruby-progressbar (1.7.1)
     safe_attributes (1.0.10)
       activerecord (>= 3.0.0)
@@ -267,6 +268,7 @@ DEPENDENCIES
   pg (= 0.17.1)
   rails (= 4.2.0.rc3)
   rails_12factor (= 0.0.2)
+  rouge (~> 1.7.7)
   safe_attributes
   sass-rails (= 5.0.0.beta1)
   sdoc (= 0.4.0)
