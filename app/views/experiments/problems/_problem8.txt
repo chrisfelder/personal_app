@@ -1,0 +1,61 @@
+
+    # finds the greatest product of adjacent digits covering a given length (length)
+    # within a static series
+    
+    def largest_product(length)
+        temp_series = 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450
+
+        subseries = 0
+        max_product= 0
+    
+        # finds the subseries between 0s and computes products of length (length)
+        # saves the greatest product
+        while temp_series > 0  
+    
+            #when a 0 digit occurs in the series the subseries is evaluated
+            if temp_series % 10 == 0 && subseries != 0
+                temp_product = subseries_product(subseries, length)
+        
+                if subseries > 10 ** length && temp_product > max_product
+                    max_product = temp_product
+                end
+          
+                subseries = 0 
+        
+            else                        #places the last digit in a subseries
+                subseries = subseries * 10
+                subseries = subseries + (temp_series % 10)
+            end
+      
+            temp_series = temp_series / 10   #and deletes the last digit
+        end 
+    
+        return max_product
+    end
+    
+    # determines the largest product of a given integer subseries
+    # with a specific length 
+    
+    def subseries_product(subseries, length)
+        max_product = 0
+        while subseries > 0
+        temp_product = int_product(subseries % (10 ** length))
+        if temp_product > max_product
+            max_product = temp_product
+        end
+        subseries = subseries / 10
+        end
+        return max_product
+    end
+
+    # returns the product of each digit in an integer
+    # e.g. 43 will return ( 4 * 3 ) = 12
+    def int_product(length)
+        product = 1
+    
+        while length > 0
+            product = product * (length % 10)
+            length = length / 10
+        end
+        return product
+    end

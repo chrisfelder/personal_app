@@ -1,0 +1,25 @@
+    #returns the nth prime number below 1 * 10^12
+    def nth_prime(int)
+        bool = true
+        prime_array = [2]
+    
+        (3..1000000000000).step(2) do |x|
+            bool = true
+            prime_array.each.with_index do |char, index|
+                if x % char == 0
+                    bool = false
+                    break
+                elsif index > Math.sqrt(prime_array.length)
+                    break
+                end
+            end
+      
+            if bool == true
+                prime_array << x
+                if prime_array.length == int
+                    return prime_array.last
+                end
+            end
+      
+        end
+    end

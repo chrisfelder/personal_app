@@ -1,0 +1,10 @@
+
+    def variance(x, y)
+        sum = 0
+        sum_of_squares = 0
+        for i in x..y
+            sum += i
+            sum_of_squares = sum_of_squares + i * i
+        end
+        sum ** 2 - sum_of_squares
+    end
