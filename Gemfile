@@ -16,6 +16,7 @@ gem 'jquery-rails',            '4.0.0.beta2'
 gem 'turbolinks',              '2.3.0'
 gem 'jbuilder',                '2.2.3'
 gem 'rouge',                   '~> 1.7.7'
+gem 'redcarpet',               '~> 3.0.0'
 gem 'sdoc',                    '0.4.0', group: :doc
 gem 'safe_attributes'
 

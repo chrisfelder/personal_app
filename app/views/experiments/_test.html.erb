@@ -1,0 +1,35 @@
+<code>
+    
+    def smallest_multiple(int)
+      count = 2
+      array = []
+      temp_multiple = 0
+      temp_count = 0
+      multiple_array = []
+      
+      for i in 2..int
+        array << i
+      end
+      while count <= int
+        array.each.with_index do |char, index|
+          if char == 1
+            next
+          elsif char % count == 0
+            temp_count += 1
+            temp_multiple = count
+            array[index] = char/count
+          end
+        end
+        
+        if temp_count > 0
+          multiple_array << temp_multiple
+          temp_count = 0
+          count = 2
+        else
+          count += 1
+        end
+      end
+      return multiple_array 
+    end
+    
+</code>    
