@@ -1,5 +1,8 @@
 
-    # finds the greatest product of adjacent digits covering a given length (length)
+
+
+~~~ruby
+    # computes the greatest product of adjacent digits covering a given length (length)
     # within a static series
     
     def largest_product(length)
@@ -38,12 +41,13 @@
     
     def subseries_product(subseries, length)
         max_product = 0
+        
         while subseries > 0
-        temp_product = int_product(subseries % (10 ** length))
-        if temp_product > max_product
+            temp_product = int_product(subseries % (10 ** length))
+            if temp_product > max_product
             max_product = temp_product
         end
-        subseries = subseries / 10
+            subseries = subseries / 10
         end
         return max_product
     end
@@ -59,3 +63,5 @@
         end
         return product
     end
+
+~~~

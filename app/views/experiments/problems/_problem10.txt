@@ -1,0 +1,34 @@
+~~~ruby   
+   
+    #finds the nth prime number below 1 * 10^12
+    def prime_sum(int)
+    bool = true
+    prime_array = [2]
+    
+    (3..int).step(2) do |x|
+        bool = true
+        prime_array.each.with_index do |char, index|
+            if x % char == 0
+                bool = false
+                break
+            elsif index > Math.sqrt(prime_array.length)
+                break
+            end
+        end
+      
+        if bool == true
+          prime_array << x
+        end
+      
+        end
+    
+        return prime_array.inject(:+)
+    end
+  
+    # Uses Ruby's Prime Class to return the sum of all primes up to an integer
+    def prime_sumx(int)
+        a = Prime.take_while { |x| x < int }
+        return a.inject(:+)
+    end
+    
+~~~
