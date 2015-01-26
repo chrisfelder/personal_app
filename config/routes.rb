@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'interview' => 'experiments#interview'
   
   get 'euler' => 'experiments#euler'
+  
+  get 'algorithms' => 'experiments#algorithms'
 
   root 'static_pages#home'
   

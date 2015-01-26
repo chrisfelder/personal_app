@@ -11,7 +11,9 @@ class ExperimentsController < ApplicationController
   end
   
   def euler
-    
+  end
+  
+  def algorithms
   end
   
   def show

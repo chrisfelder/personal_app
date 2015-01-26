@@ -238,5 +238,58 @@ module ExperimentsHelper
     a = Prime.take_while { |x| x < int }
     return a.inject(:+)
   end
+  
+  def count(array, length)
+    if length == 1
+      return 0    
+    else
+      
+    end
+    
+  end
+  
+  def sort_and_count(array, length)
+    b = []
+    c = []
+    d = []
 
+    sub_length = (length / 2)
+    sub_b = array[0..sub_length - 1]
+    sub_c = array[sub_length..length - 1]
+    
+    if length == 1
+      return [array, 0]
+    else
+      b = sort_and_count(sub_b , sub_b.length)
+      c = sort_and_count(sub_c, sub_c.length)
+      d = merge_and_count(b[0], c[0], length)
+    end
+    d[1] = d[1] + b[1] + c[1]
+    return d
+  end
+
+  def merge_and_count(array_b, array_c, length)
+    output = []
+    inversion_count = 0
+    j = 0
+    k = 0
+    for i in 0...length
+      if array_b[j].nil?
+        output[i] = array_c[k]
+        k += 1
+      elsif array_c[k].nil?
+        output[i] = array_b[j]
+        j += 1
+      elsif array_b[j] < array_c[k]
+        output[i] = array_b[k]
+        j += 1
+      else
+        output[i] = array_c[k]
+        inversion_count += array_b.length - j
+        k += 1
+      end
+      
+    end
+    return [output, inversion_count]
+  end
 end
