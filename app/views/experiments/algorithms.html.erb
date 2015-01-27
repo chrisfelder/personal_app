@@ -25,10 +25,20 @@
             <p><%= sort_and_count([6, 5, 4, 3, 2, 1], 6) %></p>
       
             <p><%= sort_and_count([4, 3, 2, 1], 4) %></p>
-            <p><% taco = [0, 1, 2] %></p>
-            <p><%= s_length = (taco.length / 2.0).ceil %></p>
+            <p><% taco = [1, 2, 3, 4, 5, 6, 7] %></p>
+            <p><%= s_length = taco.length / 2 %></p>
+            <p><%= taco[0..s_length - 1] %></p>
             <p><%= taco[s_length..taco.length] %></p>
-            
+            <p><%= sort_and_countx([54044, 14108, 79294, 29649, 25260, 60660, 2995], 7) %></p>
+            <p><%= merge_and_count([54044], [14108, 79294], 3) %> </p>
+            <p> <% array = [] %>
+                <%= File.foreach(Rails.root + 'app/views/experiments/algorithm1.txt' ) do |f| %>
+                <% array << f.to_i %>
+                <%=  %>
+                <% end %> 
+            </p>
+            <p><%= array %></p>
+            <p> <%= sort_and_count(array, array.length) %></p>
           </div>
         </div>
       </div>

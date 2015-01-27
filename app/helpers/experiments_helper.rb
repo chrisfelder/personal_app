@@ -248,6 +248,11 @@ module ExperimentsHelper
     
   end
   
+  def sort_and_countx(array, length)
+    temp = sort_and_count(array, length)
+    return temp[1]
+  end
+  
   def sort_and_count(array, length)
     b = []
     c = []
@@ -262,7 +267,7 @@ module ExperimentsHelper
     else
       b = sort_and_count(sub_b , sub_b.length)
       c = sort_and_count(sub_c, sub_c.length)
-      d = merge_and_count(b[0], c[0], length)
+      d = merge_and_count(b[0], c[0], b[0].length + c[0].length)
     end
     d[1] = d[1] + b[1] + c[1]
     return d
@@ -281,7 +286,7 @@ module ExperimentsHelper
         output[i] = array_b[j]
         j += 1
       elsif array_b[j] < array_c[k]
-        output[i] = array_b[k]
+        output[i] = array_b[j]
         j += 1
       else
         output[i] = array_c[k]
