@@ -1,4 +1,4 @@
-
+~~~ruby
     def variance(x, y)
         sum = 0
         sum_of_squares = 0
@@ -8,3 +8,4 @@
         end
         sum ** 2 - sum_of_squares
     end
+~~~

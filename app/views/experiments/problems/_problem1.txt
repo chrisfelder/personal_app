@@ -1,0 +1,12 @@
+~~~ruby
+    # returns the sum of all multiples of 3 and 5 from 0 to int.
+    def multiples_of_three_and_five(int)
+        sum = 0
+        for i in 0..int 
+        if i % 3 == 0 || i % 5 == 0
+            sum += i
+            end
+        end
+        return sum
+    end
+~~~

@@ -22,7 +22,9 @@ $gray-medium-light: #eaeaea;
   @include box_sizing;
 }
 
-
+body {
+  font-family: 'lucida';
+}
 
 #page1 {
   font-family: 'Alike', serif;

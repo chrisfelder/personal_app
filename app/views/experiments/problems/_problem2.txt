@@ -1,0 +1,22 @@
+~~~ruby    
+    # return the sum of every even Fibonacci number from 1 to max
+    def sum_even_fibonacci(max)
+      fibonacci = 1
+      last_fib = 1
+      temp_fib = 0
+      sum = 0
+      
+      while fibonacci < max do
+        if fibonacci % 2 == 0
+          sum += fibonacci
+        end
+        
+        temp_fib = fibonacci
+        fibonacci += last_fib
+        last_fib = temp_fib
+      end
+      
+      return sum
+      
+    end
+~~~

@@ -32,13 +32,14 @@
             <p><%= sort_and_countx([54044, 14108, 79294, 29649, 25260, 60660, 2995], 7) %></p>
             <p><%= merge_and_count([54044], [14108, 79294], 3) %> </p>
             <p> <% array = [] %>
-                <%= File.foreach(Rails.root + 'app/views/experiments/algorithm1.txt' ) do |f| %>
+                <%= File.foreach(Rails.root + 'app/views/experiments/algorithm_test.txt' ) do |f| %>
                 <% array << f.to_i %>
                 <%=  %>
                 <% end %> 
             </p>
             <p><%= array %></p>
             <p> <%= sort_and_count(array, array.length) %></p>
+            <p> <%= fizzbuzz("3 5 10") %> </p>
           </div>
         </div>
       </div>

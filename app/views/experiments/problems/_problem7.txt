@@ -1,3 +1,4 @@
+~~~ruby
     #returns the nth prime number below 1 * 10^12
     def nth_prime(int)
         bool = true
@@ -23,3 +24,4 @@
       
         end
     end
+~~~

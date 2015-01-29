@@ -1,0 +1,24 @@
+~~~ruby
+    # returns the largest prime factor of int
+    def largest_prime_factor(int)
+        i = 2
+        array = []
+        
+        if int == 1
+            return 1
+        end
+    
+    while i <= int
+      if int % i == 0
+        array << i
+        int = int/i
+        i = 2
+      else
+        i += 1
+      end
+    end
+    
+    return array
+    
+  end
+~~~

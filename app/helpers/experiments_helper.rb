@@ -297,4 +297,85 @@ module ExperimentsHelper
     end
     return [output, inversion_count]
   end
+  
+  def lettercase(string)
+    count_lower = 0
+    count_upper = 0
+    string.each_char do |x|
+      if /[[:upper:]]/ =~ x
+        count_upper += 1
+      elsif /[[:lower:]]/ =~ x
+        count_lower += 1
+      end
+    end
+    
+    sum = count_lower.to_f + count_upper.to_f
+    return "lowercase: " + sprintf( "%0.2f", (count_lower / sum * 100)) + " " +
+      "uppercase: " + sprintf( "%0.2f", (count_upper / sum * 100))
+
+  end
+  
+  # returns Fizz if divisible by X, Buzz if divisible by Y, and FizzBuzz if
+  # divisible by both.
+  def fizzbuzz(string)
+    temp = ""
+    array = string.split(' ').map { |j| j.to_i }
+    for i in 1..array[2] do
+      if i % array[0] == 0 && i % array[1] == 0
+        temp << "FB "
+      elsif i % array[0] == 0
+        temp << "F "
+      elsif i % array[1] == 0
+        temp << "B "
+      else
+        temp << i.to_s + " " 
+      end
+    end
+    return temp.rstrip
+  end
+  
+  
+    
+  def sortx(array)
+    b = []
+    c = []
+    d = []
+
+    sub_length = (array.length / 2)
+    sub_b = array[0..sub_length - 1]
+    sub_c = array[sub_length..length - 1]
+    
+    if length == 1
+      return [array, 0]
+    else
+      b = sortx(sub_b)
+      c = sortx(sub_c)
+      d = mergex(b, c)
+    end
+    return d
+  end
+
+  def mergex(array_b, array_c)
+    output = []
+    j = 0
+    k = 0
+    length = array_b.length + array_c.length
+    for i in 0...length
+      if array_b[j].nil?
+        output[i] = array_c[k]
+        k += 1
+      elsif array_c[k].nil?
+        output[i] = array_b[j]
+        j += 1
+      elsif array_b[j] < array_c[k]
+        output[i] = array_b[j]
+        j += 1
+      else
+        output[i] = array_c[k]
+        k += 1
+      end
+      
+    end
+    return [output]
+  end
 end

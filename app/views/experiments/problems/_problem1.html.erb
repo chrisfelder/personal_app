@@ -1,0 +1,21 @@
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Multiples of 3 and 5
+          </a>
+        </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <p>
+              If we list all the natural numbers below 10 that are multiples of
+              3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+            </p>
+            <p>Find the sum of all the multiples of 3 or 5 below 1000.</p>
+            <p><%= more_markdown(render 'experiments/problems/problem1.txt') %></p>
+
+          </div>
+        </div>
+      </div>
