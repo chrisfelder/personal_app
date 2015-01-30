@@ -1,10 +1,6 @@
 ~~~ruby
   #Uses a divide and conquer method to sort and count the number of inversions
   #in an array of given length. This algorithm runs in O(nlogn) time.
-  def sort_and_countx(array, length)
-    temp = sort_and_count(array, length)
-    return temp[1]
-  end
   
   def sort_and_count(array, length)
     b = []

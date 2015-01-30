@@ -22,6 +22,14 @@ $gray-medium-light: #eaeaea;
   @include box_sizing;
 }
 
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+
+
 body {
   font-family: 'lucida';
 }

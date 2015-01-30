@@ -15,31 +15,48 @@
           <div class="panel-heading" role="tab" id="headingOne">
             <h4 class="panel-title">
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Multiples of 3 and 5
+                Extensions of Merge-Sort
               </a>
             </h4>
            </div>
           <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
-      
-            <p><%= sort_and_count([6, 5, 4, 3, 2, 1], 6) %></p>
-      
-            <p><%= sort_and_count([4, 3, 2, 1], 4) %></p>
-            <p><% taco = [1, 2, 3, 4, 5, 6, 7] %></p>
-            <p><%= s_length = taco.length / 2 %></p>
-            <p><%= taco[0..s_length - 1] %></p>
-            <p><%= taco[s_length..taco.length] %></p>
-            <p><%= sort_and_countx([54044, 14108, 79294, 29649, 25260, 60660, 2995], 7) %></p>
-            <p><%= merge_and_count([54044], [14108, 79294], 3) %> </p>
-            <p> <% array = [] %>
-                <%= File.foreach(Rails.root + 'app/views/experiments/algorithm_test.txt' ) do |f| %>
-                <% array << f.to_i %>
-                <%=  %>
-                <% end %> 
+            <p>
+              Divide and Conquer strategies to algorithm development often
+              involve dividing a problem into subsets that are recursively
+              called until they reach leaf-like elements. These are compared
+              in a linear fashion to reach the end result. 
             </p>
-            <p><%= array %></p>
-            <p> <%= sort_and_count(array, array.length) %></p>
-            <p> <%= fizzbuzz("3 5 10") %> </p>
+            <p>
+              Merge-Sort is a classic example of the Divide and Conquer
+              algorithm design that divides an array to be sorted into
+              halves that are recursively called until terminal elements
+              are reached. These elements are then combined in a merge
+              step. This strategy, developed by John von Neumann, 
+              effectively reduces a O(n^2) brute force algorithm to a 
+              O(n * log n) algorithm.
+            </p>
+            
+            <p>
+              The example provided was designed as an exercise in 
+              <%= link_to 'Algorithms: Design and Analysis, Part 1' ,
+              'https://www.coursera.org/course/algo' %> by Tim Roughgarden.
+              This algorithm accepts an integer array and computes the number
+              of inversions using a Divide and Conquer strategy. Through recursive
+              calls the arrays are divided. The merge method counts the number
+              of inversions and passes back an array containing the merged
+              array and the count of the inversion. The sum of the merge
+              step are combined with those of both recursive methods to obtain
+              a final array composed of the sorted subarray and inversion
+              count. This is then passed up to the previous recursive call 
+              until a final count is reached.
+              
+              
+            </p><br>
+            <p><%= more_markdown(render 'experiments/algorithms/count_inversions.txt') %></p>
+
+
+
           </div>
         </div>
       </div>

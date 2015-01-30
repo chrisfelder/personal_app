@@ -2,6 +2,7 @@ class ExperimentsController < ApplicationController
   before_action :set_board, only: :update
   
   def index
+    @page_background = "cv_background"
   end
   
   def new

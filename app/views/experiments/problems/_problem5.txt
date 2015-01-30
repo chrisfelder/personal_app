@@ -1,4 +1,15 @@
 ~~~ruby
+  #returns the smallest multiple of all the numbers from 1 to int
+  def smallest_multiple(int)
+    count = 2
+    array = []
+    temp_multiple = 0
+    temp_count = 0
+    multiple_array = []
+    for i in 2..int
+      array << i
+    end
+    
     while count <= int
       array.each.with_index do |char, index|
         if char == 1
