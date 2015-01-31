@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+challenge1:
+  title: Test Title
+  description: This is a test challenge. The challenge is making it run.
+  code: ~~~ruby puts I like cake ~~~
+
+two:
+  title: MyString
+  description: MyText
+  code: MyText

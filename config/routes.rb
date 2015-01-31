@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   
   resources :experiments
+  resources :challenges
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
