@@ -1,0 +1,40 @@
+Smallest multiple
+<>
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+<>
+~~~ruby
+  #returns the smallest multiple of all the numbers from 1 to int
+  def smallest_multiple(int)
+    count = 2
+    array = []
+    temp_multiple = 0
+    temp_count = 0
+    multiple_array = []
+    for i in 2..int
+      array << i
+    end
+    
+    while count <= int
+      array.each.with_index do |char, index|
+        if char == 1
+          next
+        elsif char % count == 0
+          temp_count += 1
+          temp_multiple = count
+          array[index] = char/count
+        end
+      end
+      
+      if temp_count > 0
+        multiple_array << temp_multiple
+        temp_count = 0
+        count = 2
+      else
+        count += 1
+      end
+    end
+    return multiple_array
+  end
+~~~

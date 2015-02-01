@@ -1,0 +1,28 @@
+Special Pythagorean triplet
+<>
+A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
+
+a2 + b2 = c2
+
+For example, 32 + 42 = 9 + 16 = 25 = 52.
+
+There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+Find the product abc.
+<>
+~~~ruby
+    
+    # Uses Euclid's formla to find the product of a pythagorean triplet given 
+    # the sum of the triplet
+    def pythagorean_triplet(int)
+        temp_array = (1..(int / 2)).to_a
+        a = temp_array.find { |z| (int * (int / 2 - z) % (int - z)).zero? }
+    
+        b = int * (int / 2 - a) / ( int - a)
+    
+        return a * b * (int - a - b)
+
+    end
+    
+    # Elapsed Real Time (0.000061) seconds
+    
+~~~

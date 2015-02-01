@@ -1,0 +1,30 @@
+Largest palindrome product
+<>
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+<>
+~~~ruby
+    #note This method runs at O(n^2) and needs further refactoring.
+    #returns the largest palindrome of two integers
+    def palindrome(x, y)
+        product = 0
+        reverse_product = 0
+        product_save = []
+        product_save[0] = 0
+    
+        for i in 1..x
+            for j in 1..y
+                product = i * j
+                reverse_product = reverse(product)
+                if product == reverse_product && product > product_save.max  
+                    product_save[0] = product
+                else
+                end
+            end
+        end
+    
+        return product_save
+        
+    end
+~~~

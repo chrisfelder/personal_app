@@ -1,0 +1,41 @@
+<div class= "container" >
+  <div class = "row center" >
+    <h2>Project Euler</h2>
+    <p>
+      Below you will find the algorithms I used to answer each question.
+      The answers are hidden to prevent spoiling the answers for others.
+    </p>
+  </div>
+  <div class = "row" >
+    
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <% @challenges.each.with_index do |challenge, index| %>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id=<%= "heading" + index.to_s %>>
+            <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href=<%= "#collapse" + index.to_s %> aria-expanded="true" aria-controls=<%= "collapse" + index.to_s %>>
+              <%= challenge.title %>
+            </a>
+            </h4>
+          </div>
+          <div id=<%= "collapse" + index.to_s %> class="panel-collapse collapse" role="tabpanel" aria-labelledby=<%= "heading" + index.to_s %>>
+              <div class="panel-body">
+                <%= dat_markdown(challenge.description) %>
+                <p><%= more_markdown(challenge.code) %></p>
+
+              </div>
+            </div>
+        </div>
+
+    
+    
+    <% end %>
+      
+
+
+
+    </div>
+
+  </div> <!-- class: "row" -->
+</div>
+

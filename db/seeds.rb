@@ -27,15 +27,18 @@ character = Character.create(name: "Ringo Starr" ,  strength: 10,
 gamestore = Gamestore.create(name: "Save1", turn: 0, char1: 1, user_id: 1)
 gamestore = Gamestore.create(name: "Save2", turn: 0, char1: 2, user_id: 1)
 
-challenge = Challenge.create(
-  title: "Multiples of 3 and 5",
-  description:  "           
-    <p>
-      If we list all the natural numbers below 10 that are multiples of
-      3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
-    </p>
-    <p>Find the sum of all the multiples of 3 or 5 below 1000.</p>",
-  code: "~~~ruby
-    puts 'I like taco'
-    ~~~"
-)
+
+#creates seed data for Challenges
+#To add new files, place them in the /lib/assets/challenges/challenge directory
+files = Dir.glob(Rails.root.to_s + "/lib/assets/challenges/**/*")
+files = files.sort!
+files.each do |file|
+  contents = File.open(file).read
+  #Each section in the file is split with a <>
+  array = contents.split("<>")
+  challenge = Challenge.create(
+    title: array[0],
+    description: array[1],
+    code: array[2]
+    )
+  end

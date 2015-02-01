@@ -1,0 +1,30 @@
+Largest prime factor
+<>
+The prime factors of 13195 are 5, 7, 13 and 29.
+
+What is the largest prime factor of the number 600851475143?
+<>
+~~~ruby
+    # returns the largest prime factor of int
+    def largest_prime_factor(int)
+        i = 2
+        array = []
+        
+        if int == 1
+            return 1
+        end
+    
+    while i <= int
+      if int % i == 0
+        array << i
+        int = int/i
+        i = 2
+      else
+        i += 1
+      end
+    end
+    
+    return array
+    
+  end
+~~~
