@@ -93,28 +93,45 @@ module ExperimentsHelper
     return [output]
   end
   
+  
   def quick_sort(array, length)
-    if length == 1
+
+    if length == 1 || length == 0
       return array
     else
       pivot = choose_pivot(array, length)
-      array = partition(array, 0, length)
-      puts "entering Left"
-      array[0..(length / 2 - 1)] = quick_sort(array[0..(length / 2 - 1)], length / 2)
-      puts "entering right"
-      #array[(length / 2)..(length - 1)] = quick_sort(array[(length / 2)..(length - 1)], length / 2)
-      #recursively sort 1st part
-      #recursively sort 2nd part
+      #array = partition(array, pivot, length - 1)
+    
+      
+      i = pivot + 1
+      j = pivot + 1
+      for x in j..length - 1
+        if array[j] < array[pivot]
+          array[j], array[i] = array[i], array[j]
+          i += 1
+        end
+        j += 1
+      end
+      
+      array[pivot], array[i - 1] = array[i - 1], array[pivot]
+
+      #recursively sort array < p
+      array[0..(i - 2)] = quick_sort(array[0..(i - 2)], i - 1)
+      
+      #recursively sort array > p
+      array[i..(length - 1)] = quick_sort(array[i..(length - 1)], (length - i))
+      
+      return array
     end
-    return array
   end
   
   def choose_pivot(array, length)
-    return array[0]
+    return 0
   end
   
-  # 3 8 2 5 1 4 7 6
+  # 3 8 2 5 1 4 7 6 or # 2 1 4 3
   def partition(array, left, right)
+
     pivot = array[left]
     i = left + 1
     j = left + 1
