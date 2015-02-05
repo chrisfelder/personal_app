@@ -282,4 +282,37 @@ module ChallengesHelper
     end
     return temp.rstrip
   end
+  
+  def odds(int)
+    temp = []
+    (1..int).each do |i|
+      if i % 2 != 0
+          temp << i
+      end
+    end
+    temp
+  end
+  
+  def bit_position(str)
+    temp_array = str.split(',')
+    temp_bin = temp_array[0].to_i.to_s(2).reverse
+    if temp_bin[temp_array[1].to_i - 1] == temp_bin[temp_array[2].to_i - 1 ]
+      return true
+    else
+      return false
+    end
+  end
+  
+  def decode(str)
+    temp_sum
+    temp_array = str.split(';')
+    sub_array = temp_array[0].split(' ')
+    index_array = temp_array[1].split(' ')
+    index_array.each do |x|
+      x.to_i
+      sum += x
+    end
+    
+    return sub_array
+  end
 end
