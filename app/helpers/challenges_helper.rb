@@ -304,15 +304,64 @@ module ChallengesHelper
   end
   
   def decode(str)
-    temp_sum
+    final_string = ""
+    final_array = []
+    temp_sum = 0
     temp_array = str.split(';')
     sub_array = temp_array[0].split(' ')
     index_array = temp_array[1].split(' ')
-    index_array.each do |x|
-      x.to_i
-      sum += x
+    index_array.each.with_index do |char, index|
+      index_array[index] = char.to_i
+      temp_sum += char.to_i
+    end
+    adj_length = index_array.length + 1
+    max_sum = (adj_length * (adj_length + 1))/2
+    puts "This is the max sum: " + max_sum.to_s
+    puts "This is the actual sum: " + temp_sum.to_s
+    index_array << max_sum - temp_sum
+    puts "This is the sub_array: " + sub_array.to_s
+    puts "This is the index_array: " + index_array.to_s
+    
+    index_array.each.with_index do |value, index|
+      final_array[value.to_i - 1] = sub_array[index]
+    end
+    puts "This is the final_array: " + final_array.to_s
+    final_array.each do |y|
+      final_string << y + " "
     end
     
-    return sub_array
+    return final_string.chomp(" ")
   end
+  
+  #def dna(str)
+  #  temp_array = str.split(" | ")
+  #  puts "This is the left array length: " + temp_array[0].length.to_s
+  ##  max_del = temp_array[0].length - temp_array[1].length
+  #  return 0
+  #end
+  
+  #def sub_dna(str1, str2, length)
+  #  sum = 0
+  #  beginning = 0
+  #  if length == 1
+  #    if str1 != str2
+  #      return [str2, -3]
+  #    else
+  #      return [str2, 3]
+  #    end
+  #  end
+  #  
+  #  str1.each.with_index do |char, index|
+  #    if char == str2[index]
+  #      sum += 3
+  #      length -= 1
+  #      beginning += 1
+  #    else
+  #      #call sub dna with the shorter str1 and str2
+  #      del = sub_dna(str1[beginning..length])
+  #      #call sub dna with the shorter str1 and str2 in place
+  #      mismatch = sub_dna(str1[beginning.length])
+  #    end
+  #  end
+  #end
 end
