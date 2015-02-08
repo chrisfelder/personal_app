@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class ExperimentTest < ActiveSupport::TestCase
-  #include ExperimentsHelper
-  #array = []
+  include ExperimentsHelper
+  array = []
+  verteces = 0
   #file = File.open(Rails.root.to_s + "/lib/assets/algorithms/quicksort.txt", "r")
   #file.each_line do |line|
   #  array << line.to_i
@@ -25,13 +26,34 @@ class ExperimentTest < ActiveSupport::TestCase
   #  assert_equal [609, 2148, 3153, 6324, 7628, 7742, 9058], quick_sort(array, 7)
   #end
   
-  #filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/testcase1.txt", "r")
-  #filex.each_line do |line|
-  #  array << line.to_i
-  #end
-  #filex.close
-  #test "run quicksort count on small sample file" do
-  #  assert_equal 21, quick_sort_count(array)
-  #end
+  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/mincut_full.txt", "r")
+  filex.each_line do |line|
+    temp_array = line.split(' ')
+    v1 = temp_array[0]
+    temp_array.shift
+    verteces += 1
+    temp_array.each do |x|
+      if x > v1
+        array << [v1, x]
+      end
+    end
+    
+  end
+  filex.close
+  
+  test "Run first test" do
+    temp_min = 0
+    final_min = 999
+    (0..4).each do |d|
+      temp_array = Marshal.load( Marshal.dump(array))
+      #puts array.to_s
+      #puts "Outside method verteces: " + verteces.to_s
+      temp_min = mincut(temp_array, verteces)
+      if temp_min < final_min
+        final_min = temp_min
+      end
+    end
+    assert_equal 17, final_min
+  end
   
 end

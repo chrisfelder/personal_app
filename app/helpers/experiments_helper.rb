@@ -240,5 +240,48 @@ module ExperimentsHelper
     end
   end
   
-  
+  def mincut(array, verteces)
+    temp_array = array.clone
+    delete_array = []
+    adjust_delete = 0
+    
+    while verteces > 2
+    temp = Random.new.rand(1..(array.length))
+    #puts "This is the random variable: " + temp.to_s
+    temp_vertex = array[temp - 1]
+    array.delete_at(temp - 1)
+    #puts "This is temp_vertex before merging" + temp_vertex.to_s
+    #puts "This is the array before merging" + array.to_s
+    array.each.with_index do |value, index|
+      #puts "This is the current value: " + value.to_s
+      if value[0] == temp_vertex[1]
+        array[index][0] = temp_vertex[0]
+        
+     elsif value[1] == temp_vertex[1]
+       array[index][1] = temp_vertex[0]
+      end
+      
+      #puts "This compares value[1]: " + value[1].to_s + "  to value[0]: " + value[0].to_s 
+      if value[0] > value[1]
+        value[0], value[1] = value[1], value[0]
+        
+      elsif value[0] == value[1]
+        #puts "This is the current Index going into delete_array: " + index.to_s
+        delete_array << index
+      end
+    end
+    #puts "This is the delete array before deleting: " + delete_array.to_s
+    
+    delete_array.each do |x|
+      array.delete_at(x - adjust_delete)
+      adjust_delete += 1
+    end
+    adjust_delete = 0
+    delete_array = []
+    
+    verteces -= 1
+    end
+    #puts "This is the returned length " + array.length.to_s
+    return array.length
+  end
 end
