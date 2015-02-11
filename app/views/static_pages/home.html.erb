@@ -5,16 +5,28 @@
             <p>This is my virtual playground on the web. Feel free to explore the site!</p>
         </div>
     </div>
-    
-    <div class = "row">
-        <div class="col-md-4" >
-            
+    <br>
+    <div class = "row text-center">
+        <div class="col-sm-4" >
+            <%= link_to experiments_path, class: "glyphicon-normal" do %>
+                <i class='glyphicon glyphicon-cog' ></i>
+            <% end %>
+            <h3>Experiments!</h3>
+            <p>An ongoing collection of challenges, algorithms, AIs, and Interview Questions.</p>
         </div>
-        <div class="col-md-4" >
-            
+        <div class="col-sm-4" >
+            <%= link_to cv_path, class: "glyphicon-normal" do %>
+            <i class='glyphicon glyphicon-user' ></i>
+            <% end %>
+            <h3>Curriculum Vitae</h3>
+            <p>A summary of my work experience, skills, education, and professional links.</p>
         </div>
-        <div class="col-md-4" >
-            
+            <div class="col-sm-4" >
+                <%= link_to projects_path, class: "glyphicon-normal" do %>
+                    <i class='glyphicon glyphicon-book' ></i>
+                <% end %>
+            <h3>Projects</h3>
+            <p>A repository of previous academic projects.</p>
         </div>
     </div>
 </div>
