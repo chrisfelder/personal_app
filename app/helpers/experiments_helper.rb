@@ -241,7 +241,6 @@ module ExperimentsHelper
   end
   
   def mincut(array, verteces)
-    temp_array = array.clone
     delete_array = []
     adjust_delete = 0
     
@@ -275,5 +274,66 @@ module ExperimentsHelper
     verteces -= 1
     end
     return array.length
+  end
+  
+  def onSegment?(point_p, point_q, point_r)
+    if (q[0] <= [point_p[0], point_r[0]].max &&
+        point_q[0] >= [point_p[0], point_r[0]].min &&
+        point_q[1] <= [point_p[1], point_r[1]].max &&
+        point_q[1] >= [point_q[1], point_r[1]].min)
+      true
+    else
+      false
+    end
+  end
+  
+  def orientation(point_p, point_q, point_r)
+    temp = (point_q[1] - point_p[1]) * (point_r[0] - point_q[0]) -
+           (point_q[0] - point_p[0]) * (point_r[1] - point_q[1])
+           
+    if (temp == 0)
+       0  #the orientation is colinear
+    elsif temp > 0
+       1  #the orientation is clockwise
+    else
+       2  #the orientation is counter-clockwise
+    end
+  end
+  
+  def intersect?(p1, q1, p2, q2)
+    
+    #finds the four orientations
+    orientation1 = orientation(p1, q1, p2)
+    orientation2 = orientation(p1, q1, q2)
+    orientation3 = orientation(p2, q2, p1)
+    orientation4 = orientation(p2, q2, q1)
+    
+    #tests for intersections in the general case
+    #may need to test for special cases in future iterations
+    if (orientation1 != orientation2 && orientation3 != orientation4)
+      return true
+    else
+      false
+    end
+  end
+  
+  def parsebridges(string)
+    temp_array = []
+    intermediate_array = []
+    tempy_array = string.split(/\(([^\)]+)\)/)
+    
+    
+    tempy_array.each.with_index do |str, index|
+      if index % 2 != 0
+        intermediate_array << str.scan(/-?\d+\.\d+/)
+      end
+    end
+    
+    intermediate_array.each.with_index do |array, index|
+      temp_array[index] = [array[0].to_f, array[1].to_f],
+                           [array[2].to_f, array[3].to_f], []
+    end
+    
+    return temp_array
   end
 end

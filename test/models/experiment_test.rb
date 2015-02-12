@@ -55,5 +55,45 @@ class ExperimentTest < ActiveSupport::TestCase
 #    end
 #    assert_equal 17, final_min
 #  end
+
+  temp_string = ""
+  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/bridges1.txt", "r")
+  filex.each_line do |line|
+    temp_string << line
+  end
+  filex.close
   
+  p1 = [10, 0]
+  q1 = [0, 10]
+  p2 = [0, 0]
+  q2 = [10, 10]
+  
+  test "orientation returns counter-clockwise" do
+    assert_equal 2, orientation(p1, q1, p2)
+  end
+  
+  test "orientation returns clockwise" do
+    assert_equal 1, orientation(p2, q1, p1)
+  end
+  
+  test "orientation returns colinear" do
+    assert_equal 0, orientation(p2, q1, p2)
+  end
+  
+  test "two lines should not intersect" do
+    assert_not intersect?(p1, p2, q1, q2)
+  end
+  
+  test "two lines should intersect" do
+    assert intersect?(p1, q1, p2, q2)
+  end
+  
+  test "parsebridges should intersect" do
+    assert_equal [[[37.788353, -122.387695], [37.829853, -122.294312], []]], parsebridges("1: ([37.788353, -122.387695], [37.829853, -122.294312])")
+  end
+  
+  test "parsebridge array set" do
+    assert_equal [[[37.788353, -122.387695], [37.829853, -122.294312], []],[[37.429615, -122.087631], [37.487391, -122.018967], []]],
+    parsebridges(temp_string)
+  end
 end
