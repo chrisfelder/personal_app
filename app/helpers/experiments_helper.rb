@@ -287,7 +287,19 @@ module ExperimentsHelper
     end
   end
   
+  #returns true if positive, false if negative
+  def slope?(p1, p2)
+    slope = (p2[1] - p1[1])/(p2[0] - p1[0])
+    
+    if slope < 0
+      false
+    else
+      true
+    end
+  end
+  
   def orientation(point_p, point_q, point_r)
+
     temp = (point_q[1] - point_p[1]) * (point_r[0] - point_q[0]) -
            (point_q[0] - point_p[0]) * (point_r[1] - point_q[1])
            
@@ -301,7 +313,7 @@ module ExperimentsHelper
   end
   
   def intersect?(p1, q1, p2, q2)
-    
+
     #finds the four orientations
     orientation1 = orientation(p1, q1, p2)
     orientation2 = orientation(p1, q1, q2)
@@ -330,10 +342,38 @@ module ExperimentsHelper
     end
     
     intermediate_array.each.with_index do |array, index|
-      temp_array[index] = [array[0].to_f, array[1].to_f],
+      temp_array[index] = index + 1, [array[0].to_f, array[1].to_f],
                            [array[2].to_f, array[3].to_f], []
     end
     
     return temp_array
+  end
+  
+  def baybridge(array)
+    temp_array = array.sort_by { |point| point[1][0] }
+    temp_array.each.with_index do |value, index|
+      adj = 1
+      while temp_array[index + adj] && 
+              intersect?(temp_array[index][1],
+                         temp_array[index][2],
+                         temp_array[index + adj][1],
+                         temp_array[index + adj][2]) do
+          puts "Bridge " + value[0].to_s + "intersected with " + temp_array[index + adj][0].to_s
+          value[3] << temp_array[index + adj][0]
+          temp_array[index + adj][3] << value[0]
+          adj += 1
+      end
+        
+      while temp_array[index - adj] && 
+          intersect?(temp_array[index][1],
+                     temp_array[index][2],
+                     temp_array[index - adj][1],
+                     temp_array[index - adj][2]) do
+          value[3] << temp_array[index - adj][0]
+          temp_array[index - adj][3] << value[0]
+          adj += 1
+        end
+    end
+    temp_array
   end
 end
