@@ -276,7 +276,7 @@ module ExperimentsHelper
     return array.length
   end
   
-  def onSegment?(point_p, point_q, point_r)
+  def on_segment?(point_p, point_q, point_r)
     if (q[0] <= [point_p[0], point_r[0]].max &&
         point_q[0] >= [point_p[0], point_r[0]].min &&
         point_q[1] <= [point_p[1], point_r[1]].max &&
@@ -288,15 +288,15 @@ module ExperimentsHelper
   end
   
   #returns true if positive, false if negative
-  def slope?(p1, p2)
-    slope = (p2[1] - p1[1])/(p2[0] - p1[0])
-    
-    if slope < 0
-      false
-    else
-      true
-    end
-  end
+  #def slope?(p1, p2)
+  #  slope = (p2[1] - p1[1])/(p2[0] - p1[0])
+  #  
+  #  if slope < 0
+  #    false
+  #  else
+  #    true
+  #  end
+  #end
   
   def orientation(point_p, point_q, point_r)
 
@@ -324,10 +324,28 @@ module ExperimentsHelper
     #may need to test for special cases in future iterations
     if (orientation1 != orientation2 && orientation3 != orientation4)
       return true
-    else
-      false
     end
+    
+    if orientation1 == 0 && on_segment?(p1, p2, q1)
+      return true
+    end
+    
+    if orientation2 == 0 && on_segment?(p1, q2, q1)
+      return true
+    end
+    
+    if orientation3 == 0 && on_segment?(p2, p1, q2)
+      return true
+    end
+      
+    if orientation4 == 0 && on_segment?(p2, q1, q2)
+      return true
+    end
+    
+    return false
   end
+  
+
   
   def parsebridges(string)
     temp_array = []
@@ -350,6 +368,7 @@ module ExperimentsHelper
   end
   
   def baybridge(array)
+    delete_array = []
     temp_array = array.sort_by { |point| point[1][0] }
     temp_array.each.with_index do |value, index|
       adj = 1
@@ -358,22 +377,121 @@ module ExperimentsHelper
                          temp_array[index][2],
                          temp_array[index + adj][1],
                          temp_array[index + adj][2]) do
-          puts "Bridge " + value[0].to_s + "intersected with " + temp_array[index + adj][0].to_s
+          #puts "Bridge " + value[0].to_s + "intersected with " + temp_array[index + adj][0].to_s
+
+        if value[3].include?( temp_array[index + adj][0]) == false
           value[3] << temp_array[index + adj][0]
+        end
+        
+        if temp_array[index + adj][3].include?(value[0]) == false
           temp_array[index + adj][3] << value[0]
+        end
+          
           adj += 1
       end
-        
+      
+      adj = 1  
       while temp_array[index - adj] && 
           intersect?(temp_array[index][1],
                      temp_array[index][2],
                      temp_array[index - adj][1],
                      temp_array[index - adj][2]) do
+        if value[3].include?( temp_array[index - adj][0]) == false
           value[3] << temp_array[index - adj][0]
-          temp_array[index - adj][3] << value[0]
-          adj += 1
         end
+        
+        if temp_array[index - adj][3].include?( value[0]) == false
+          temp_array[index - adj][3] << value[0]
+        end
+        adj += 1
+      end
+      
     end
-    temp_array
+    
+    temp_array = temp_array.sort_by { |point| point[3].length }.reverse!
+    puts temp_array.to_s
+    
+    temp_array.each.with_index do |value, index|
+      if value[3].length > 0
+        value[3].each do |bridge|
+          temp_index = temp_array.index { |a| a[0] == bridge}
+          #temp_bridge[0][3].delete_if { |b| b == value[0]}
+          temp_array[temp_index][3].delete_if { |b| b == value[0]}
+        end
+        delete_array << index
+      end
+    end
+    
+    delete_array.each do |to_delete|
+      temp_array[to_delete] = nil
+    end
+    
+    temp_array.compact!
+    
+    temp_array = temp_array.sort_by { |bridge_num| bridge_num[0] }
+    
+    temp_array.each do |bridge|
+      puts bridge[0]
+      #puts bridge.to_s
+    end
+     #temp_array
+  end
+  
+  def baybridgex(array)
+    delete_array = []
+    temp_array = array.sort_by { |point| point[1][0] }
+    temp_array.each.with_index do |value, index|
+      adj = 1
+      until temp_array[index + adj].nil?  do
+        if intersect?(temp_array[index][1],
+                         temp_array[index][2],
+                         temp_array[index + adj][1],
+                         temp_array[index + adj][2])
+          
+          
+          if value[3].include?( temp_array[index + adj][0]) == false
+          #  puts "bridge " + temp_array[index + adj][0].to_s + " is about to enter" +
+          #       "bridge " + value[0].to_s + " " + value [3].to_s 
+            value[3] << temp_array[index + adj][0]
+          end
+        
+          if temp_array[index + adj][3].include?(value[0]) == false
+          #  puts "bridge " + value [0].to_s + " is about to enter" +
+          #       "bridge "  + temp_array[index + adj][0].to_s + " " +
+                 temp_array[index + adj][3].to_s
+            temp_array[index + adj][3] << value[0]
+          end
+        end
+        adj += 1
+      end
+    end
+    
+    temp_array = temp_array.sort_by { |point| point[3].length }.reverse!
+    #puts temp_array.to_s
+    
+    temp_array.each.with_index do |value, index|
+      if value[3].length > 0
+        value[3].each do |bridge|
+          temp_index = temp_array.index { |a| a[0] == bridge}
+          #temp_bridge[0][3].delete_if { |b| b == value[0]}
+          temp_array[temp_index][3].delete_if { |b| b == value[0]}
+        end
+        delete_array << index
+      end
+    end
+    
+    delete_array.each do |to_delete|
+      temp_array[to_delete] = nil
+    end
+    
+    temp_array.compact!
+    
+    temp_array = temp_array.sort_by { |bridge_num| bridge_num[0] }
+    
+    temp_array.each do |bridge|
+      puts bridge[0]
+      #puts bridge.to_s
+    end
+     #temp_array
   end
 end

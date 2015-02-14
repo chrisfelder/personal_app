@@ -57,7 +57,7 @@ class ExperimentTest < ActiveSupport::TestCase
 #  end
 
   temp_string = ""
-  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/bridges2.txt", "r")
+  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/bridges3.txt", "r")
   filex.each_line do |line|
     temp_string << line
   end
@@ -96,16 +96,17 @@ class ExperimentTest < ActiveSupport::TestCase
   #  assert_equal [[1, [37.788353, -122.387695], [37.829853, -122.294312], []],[2, [37.429615, -122.087631], [37.487391, -122.018967], []]],
   #  parsebridges(temp_string)
   #end
-  test "positive slope? returns true" do
-    assert slope?([0,0], [1, 1])
-  end
+  #test "positive slope? returns true" do
+  #  assert slope?([0,0], [1, 1])
+  #end
   
-  test "negative slope? returns false" do
-    assert_not slope?([0,0], [-1, 1])
-  end
-  test "baybridge should return lowest intersections" do
-    assert_equal [[2, [37.429615, -122.087631], [37.487391, -122.018967], []], [1, [37.788353, -122.387695], [37.829853, -122.294312], []]],
-    baybridge(parsebridges(temp_string))
-  end
+  #test "negative slope? returns false" do
+  #  assert_not slope?([0,0], [-1, 1])
+  #end
+  
+#  test "baybridge should return lowest intersections" do
+#    assert_equal [[2, [37.429615, -122.087631], [37.487391, -122.018967], []], [1, [37.788353, -122.387695], [37.829853, -122.294312], []]],
+#    baybridgex(parsebridges(temp_string))
+#  end
   
 end
