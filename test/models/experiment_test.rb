@@ -56,37 +56,30 @@ class ExperimentTest < ActiveSupport::TestCase
 #    assert_equal 17, final_min
 #  end
 
-  temp_string = ""
-  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/bridges3.txt", "r")
-  filex.each_line do |line|
-    temp_string << line
-  end
-  filex.close
+  #p1 = [10, 0]
+  #q1 = [0, 10]
+  #p2 = [0, 0]
+  #q2 = [10, 10]
   
-  p1 = [10, 0]
-  q1 = [0, 10]
-  p2 = [0, 0]
-  q2 = [10, 10]
+  #test "orientation returns counter-clockwise" do
+  #  assert_equal 2, orientation(p1, q1, p2)
+  #end
   
-  test "orientation returns counter-clockwise" do
-    assert_equal 2, orientation(p1, q1, p2)
-  end
+  #test "orientation returns clockwise" do
+  #  assert_equal 1, orientation(p2, q1, p1)
+  #end
   
-  test "orientation returns clockwise" do
-    assert_equal 1, orientation(p2, q1, p1)
-  end
+  #test "orientation returns colinear" do
+  #  assert_equal 0, orientation(p2, q1, p2)
+  #end
   
-  test "orientation returns colinear" do
-    assert_equal 0, orientation(p2, q1, p2)
-  end
+  #test "two lines should not intersect" do
+  #  assert_not intersect?(p1, p2, q1, q2)
+  #end
   
-  test "two lines should not intersect" do
-    assert_not intersect?(p1, p2, q1, q2)
-  end
-  
-  test "two lines should intersect" do
-    assert intersect?(p1, q1, p2, q2)
-  end
+  #test "two lines should intersect" do
+  #  assert intersect?(p1, q1, p2, q2)
+  #end
   
   #test "parsebridges should parse first line" do
   #  assert_equal [[1, [37.788353, -122.387695], [37.829853, -122.294312], []]], parsebridges("1: ([37.788353, -122.387695], [37.829853, -122.294312])")
@@ -108,5 +101,12 @@ class ExperimentTest < ActiveSupport::TestCase
 #    assert_equal [[2, [37.429615, -122.087631], [37.487391, -122.018967], []], [1, [37.788353, -122.387695], [37.829853, -122.294312], []]],
 #    baybridgex(parsebridges(temp_string))
 #  end
+
+  temp_string = ""
+  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/bridges3.txt", "r")
+  filex.each_line do |line|
+    temp_string << line
+  end
+  filex.close
   
 end
