@@ -494,4 +494,18 @@ module ExperimentsHelper
     end
      #temp_array
   end
+  
+  def create_graph(string)
+    final_array = []
+    temp_array = []
+    graph_array = string.split("\n")
+    graph_array.each do  |x|
+      temp_array << x.split(" ").map(&:to_i)
+    end
+    temp_array.each do |x|
+      if final_array[x - 1].nil?
+        final_array[x - 1] = []
+      end
+    end
+  end
 end
