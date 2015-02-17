@@ -495,6 +495,9 @@ module ExperimentsHelper
      #temp_array
   end
   
+  #
+  #  [ index, [array out], [array in], visited?, time, leaderhead]
+  #     0         1           2           3       4       5
   def create_graph(string)
     final_array = []
     temp_array = []
@@ -502,10 +505,112 @@ module ExperimentsHelper
     graph_array.each do  |x|
       temp_array << x.split(" ").map(&:to_i)
     end
+    
     temp_array.each do |x|
-      if final_array[x - 1].nil?
-        final_array[x - 1] = []
+      #creates a new vertex if it does not exist, populates with outgoing vertex
+      if final_array[x[0] - 1].nil?
+        final_array[x[0] - 1] = [x[0] - 1, [x[1] - 1], [], false, 0, 0]
+      else
+        final_array[x[0] - 1][1] << x[1] - 1
+      end
+      #if vertex does not exist, creates new vertex with incoming vertex
+      if final_array[x[1] - 1].nil?
+        final_array[x[1] - 1] = [x[1] - 1, [], [x[0] - 1], false, 0, 0]
+      else
+        final_array[x[1] - 1][2] << x[0] - 1
       end
     end
+    
+    final_array
+  end
+  
+  #  [ index, [array out], [array in], visited?, time, leaderhead]
+  #     0         1           2           3       4       5
+  def dfs_loop(graph)
+    returned_graph = []
+    returned_array = []
+    time = 0
+    to_visit = []
+    graph.reverse.each.with_index do |val, index|
+      visited = []
+      if val[3] == false
+        val[2].each do |next_index|
+          if graph[next_index][3] == false
+            to_visit << next_index
+          end
+        end
+        next_vert = to_visit.pop
+        val[3] = true
+        visited << val[0]
+        if next_vert.nil? == false
+          while graph[next_vert][3] == false || to_visit != [] do
+            graph[next_vert][3] = true
+            visited << graph[next_vert][0]
+            
+            graph[next_vert][2].each do |next_index|
+              if graph[next_index][3] == false
+                
+                to_visit << next_index
+              end
+            end
+            
+            if to_visit != []
+              next_vert = to_visit.pop
+            else
+              break
+            end
+            
+          end #while loop
+        end
+        
+        visited.reverse.each do |x|
+          graph[x][4] = time
+          returned_array << [time, graph[x][0]]
+          time += 1
+        end
+        
+      end
+    end #outer for loop
+    dfs_countx(graph, returned_array.reverse)
+  end
+  
+
+  def dfs_countx(graph, array)
+    to_visit = []
+    count_array = []
+    array.each.with_index do |val, index|
+      if graph[val[1]][3] == true
+        graph[val[1]][1].each do |next_index|
+          if graph[next_index][3] == true
+            to_visit << next_index
+          end
+        end
+        next_vert = to_visit.pop
+        graph[val[1]][3] = false
+        temp_array = [val[0], 1]
+        if next_vert.nil? == false
+          while graph[next_vert][3] == true || to_visit != []
+            graph[next_vert][3] = false
+            temp_array[1] += 1
+          
+            graph[next_vert][1].each do |next_index|
+              if graph[next_index][3] == true
+                to_visit << next_index
+              end
+            end
+            
+            if to_visit != []
+              next_vert = to_visit.pop
+            else
+              break
+            end
+          end #inner while
+          
+        end
+        count_array << temp_array[1]
+      end #if statement
+    end #outer loop
+    count_array = count_array.sort! {|x, y| y <=> x}
+    count_array[0..6]
   end
 end

@@ -103,14 +103,18 @@ class ExperimentTest < ActiveSupport::TestCase
 #  end
 
   temp_string = ""
-  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/scc1.txt", "r")
+  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/scc_full.txt", "r")
   filex.each_line do |line|
     temp_string << line
   end
   filex.close
   
-  test "create_graph should create a graph" do
-    test_hash = { }
-    assert_equal test_hash, create_graph(temp_string)
+  #test "create_graph should create a graph" do
+  #  test_hash = { }
+  #  assert_equal test_hash, create_graph(temp_string)
+  #end
+  
+  test "dfs_loop should return a visited graph" do
+    assert_equal [], dfs_loop(create_graph(temp_string))
   end
 end
