@@ -103,7 +103,7 @@ class ExperimentTest < ActiveSupport::TestCase
 #  end
 
   temp_string = ""
-  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/scc_full.txt", "r")
+  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/scc12.txt", "r")
   filex.each_line do |line|
     temp_string << line
   end
