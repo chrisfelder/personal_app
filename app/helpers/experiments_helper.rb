@@ -629,4 +629,54 @@ module ExperimentsHelper
     count_array = count_array.sort! {|x, y| y <=> x}
     count_array[0..6]
   end
+  
+  def detect_loop(string)
+    cycle_array = ""
+    index_array = []
+    next_index = 0
+    temp_array = string.split(" ")
+    temp_array.each.with_index do |x, index|
+      if index_array[x.to_i].nil?
+        index_array[x.to_i] = temp_array[index + 1].to_i
+      else  #the index already exists so there must be a cycle
+        cycle_array << x + " "
+        head_index = x.to_i
+        next_index = index_array[x.to_i]
+        while head_index != next_index
+         cycle_array << next_index.to_s + " "
+          next_index = index_array[next_index]
+          
+        end
+        break
+      end
+    end
+    cycle_array.chomp(" ")
+  end
+  
+  def pass_triangle(array)
+    array = array.reverse!
+    array.each.with_index do |var, index|
+    temp_array = []
+      var.each.with_index do |int, inner_index|
+        if var[inner_index + 1].nil? == false && int >= var[inner_index + 1]
+          temp_array << int
+        elsif var[inner_index + 1].nil? == false && int < var[inner_index + 1]
+          temp_array << var[inner_index + 1]
+        else
+          break
+        end
+      end
+      if array[index + 1].nil? == false
+        array[index + 1] = array[index + 1].zip( temp_array).map {|a| a.inject(:+)}
+      else
+        
+      end
+    end
+    array.last.first
+  end
+  
+  #accepts a 2D array with a maze, computes the shortest path recursively
+  def maze_path(maze)
+    maze
+  end
 end

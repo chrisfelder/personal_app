@@ -102,19 +102,46 @@ class ExperimentTest < ActiveSupport::TestCase
 #    baybridgex(parsebridges(temp_string))
 #  end
 
-  temp_string = ""
-  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/scc12.txt", "r")
-  filex.each_line do |line|
-    temp_string << line
-  end
-  filex.close
+
   
   #test "create_graph should create a graph" do
   #  test_hash = { }
   #  assert_equal test_hash, create_graph(temp_string)
   #end
   
-  test "dfs_loop should return a visited graph" do
-    assert_equal [], dfs_loop(create_graph(temp_string))
+  #test "dfs_loop should return a visited graph" do
+  # assert_equal [], dfs_loop(create_graph(temp_string))
+  #end
+  
+  #test "brent_cycle should return a cycle I" do
+  #  assert_equal "6 3 1", detect_loop("2 0 6 3 1 6 3 1 6 3 1")
+  #end
+#  
+#  test "brent_cycle should return a cycle II" do
+#    assert_equal "49", detect_loop("3 4 8 0 11 9 7 2 5 6 10 1 49 49 49 49")
+#  end
+#  test "brent_cycle should return a cycle III" do
+#    assert_equal "1 2 3", detect_loop("1 2 3 1 2 3 1 2 3")
+#  end
+  
+  #test "should return max sum" do
+  #  #assert_equal 27, pass_triangle(passed_array).to_s
+  #  assert_equal 27, pass_triangle(passed_array).to_s
+  #end
+  
+  temp_array = []
+  passed_array = []
+  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/maze1.txt", "r")
+  filex.each_line do |line|
+    temp_array << line.strip.split('')
+    temp_array.each do |x|
+      
+    end
+
+  end
+  filex.close
+  
+  test "should return shortest path through maze" do
+    assert_equal 43, maze_path(temp_array)
   end
 end
