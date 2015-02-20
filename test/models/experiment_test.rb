@@ -135,7 +135,9 @@ class ExperimentTest < ActiveSupport::TestCase
   filex.each_line do |line|
     temp_array << line.strip.split('')
     temp_array.each do |x|
-      
+      if x == " "
+        
+      end
     end
 
   end
