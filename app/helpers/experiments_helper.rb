@@ -653,6 +653,13 @@ module ExperimentsHelper
     cycle_array.chomp(" ")
   end
   
+  #Passed an array of triangles in ascending size:
+  #     [1]
+  #   [2][3]
+  #returns an array of the highest sum of a traversal from top to bottom
+  #by adding adjacent values. In this example 4 would be the highest sum.
+  #Computes the highest value of the bottom row and procedes to add these
+  #values to the next row.
   def pass_triangle(array)
     array = array.reverse!
     array.each.with_index do |var, index|
