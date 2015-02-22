@@ -686,4 +686,11 @@ module ExperimentsHelper
   def maze_path(maze)
     maze
   end
+  
+  #Accepts a graph in array form, a source node, and an array of nodes
+  #for the algorithm to compute the shortest path from the source
+  #
+  def shortestpath(graph, source, verts)
+    return graph
+  end
 end

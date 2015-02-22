@@ -131,19 +131,20 @@ class ExperimentTest < ActiveSupport::TestCase
   
   temp_array = []
   passed_array = []
-  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/maze1.txt", "r")
+  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/shortestpath1.txt", "r")
   filex.each_line do |line|
     temp_array << line.strip.split('')
     temp_array.each do |x|
-      if x == " "
-        
-      end
     end
 
   end
   filex.close
   
-  test "should return shortest path through maze" do
-    assert_equal 43, maze_path(temp_array)
+  #test "should return shortest path through maze" do
+  #  assert_equal 43, maze_path(temp_array)
+  #end
+  
+  test "should return the shortest path through graph" do
+    assert_equal 5, shortestpath(temp_array, 1, [4])
   end
 end
