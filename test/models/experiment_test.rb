@@ -131,20 +131,40 @@ class ExperimentTest < ActiveSupport::TestCase
   
   temp_array = []
   passed_array = []
-  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/shortestpath1.txt", "r")
+  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/shortestpath_full.txt", "r")
   filex.each_line do |line|
-    temp_array << line.strip.split('')
-    temp_array.each do |x|
-    end
-
+    temp_array << line.strip.split("\n")
   end
   filex.close
-  
+  #  
+  #temp_array.each do |x|
+  #    passed_array << x[0].split(" ")
+  #end
+  #if temp_array[0][0][0] == "1"
+  #  passed_array.unshift(["0 0,0"])
+  #end
+  #temp_array = []
+  #passed_array.each.with_index do |x, index|
+  #  x.each_with_index do |y, inner_index|
+  #    if inner_index == 0
+  #      passed_array[index][inner_index] = y.to_i
+  #    else
+  #      passed_array[index][inner_index] = y.split(",")
+  #      passed_array[index][inner_index].each_with_index do |z, array_index|
+  #        passed_array[index][inner_index][array_index] = z.to_i
+  #      end
+  #    end
+  #    
+  #  end
+  #  passed_array[index].shift
+  #end
+
   #test "should return shortest path through maze" do
   #  assert_equal 43, maze_path(temp_array)
   #end
   
-  test "should return the shortest path through graph" do
-    assert_equal 5, shortestpath(temp_array, 1, [4])
-  end
+  #test "should return the shortest path through graph" do
+  #  assert_equal 9, shortestpath(passed_array, 1, 197)
+  #
+  #end
 end

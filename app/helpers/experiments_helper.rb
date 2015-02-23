@@ -689,8 +689,51 @@ module ExperimentsHelper
   
   #Accepts a graph in array form, a source node, and an array of nodes
   #for the algorithm to compute the shortest path from the source
+  #   grapp is an array ordered by node number starting with 0th or 1st node
   #
+  #   [[[edge, length], [edge, length]], [[edge, length]]]
+  # Node:     0                                 2
   def shortestpath(graph, source, verts)
-    return graph
+    edge_array = []
+    v_array = (0..graph.length - 1).to_a
+    distance = 0
+    returned_distance = 0
+    #sets up x & accounts for 0 being an empty node
+    if graph[0] = []
+      x_array = [[0, 0], [source, 0]]
+      v_array.delete(0)
+      v_array.delete(source)
+    else
+      x_array = [[source, 0]]
+      v_array.delete(source)
+    end
+    
+    #searches each visited vertex's outgoing edges, finds the minimum
+    #length to the next unvisited node, and saves the node with the shortest
+    #length
+    until v_array.length == 0
+      temp_length = Float::INFINITY
+      x_array.each.with_index do |vertex, x_index|
+        distance = x_array[x_index][1]
+        graph[vertex[0]].each.with_index do |edge, index|
+          if v_array.include?(graph[vertex[0]][index][0])
+            if graph[vertex[0]][index][1] + distance < temp_length
+              temp_length = graph[vertex[0]][index][1] + distance #shortest distance
+              edge_array = [vertex[0], graph[vertex[0]][index][0]] #shortest edge
+            end
+          end
+        end
+      end
+      x_array << [edge_array[1], temp_length]
+
+      if edge_array[1] == verts
+        returned_distance = temp_length
+      end
+      v_array.delete(edge_array[1])
+      
+    end
+    
+    #returns the length for the specified source and ending nodes
+    returned_distance
   end
 end
