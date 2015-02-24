@@ -736,4 +736,8 @@ module ExperimentsHelper
     #returns the length for the specified source and ending nodes
     returned_distance
   end
+  
+  def discount(array)
+    return array
+  end
 end

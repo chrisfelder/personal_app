@@ -129,13 +129,6 @@ class ExperimentTest < ActiveSupport::TestCase
   #  assert_equal 27, pass_triangle(passed_array).to_s
   #end
   
-  temp_array = []
-  passed_array = []
-  filex = File.open(Rails.root.to_s + "/lib/assets/algorithms/shortestpath_full.txt", "r")
-  filex.each_line do |line|
-    temp_array << line.strip.split("\n")
-  end
-  filex.close
   #  
   #temp_array.each do |x|
   #    passed_array << x[0].split(" ")
@@ -167,4 +160,39 @@ class ExperimentTest < ActiveSupport::TestCase
   #  assert_equal 9, shortestpath(passed_array, 1, 197)
   #
   #end
+  
+  temp_array = []
+  passed_array = []
+  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/discount1.txt", "r")
+  filex.each_line do |line|
+    temp_array = line.strip.downcase.split(";")
+  end
+  
+  temp_array.each.with_index do |x, index|
+    temp_array[index] = x.delete(" ").split(",")
+    
+    if index == 0
+      temp_array[0].each.with_index do |y, inner_index|
+        length = y.length
+        vowels = y.count('aeiouy')
+      temp_array[0][inner_index] = [length, vowels]
+      end
+    
+    else 
+      temp_array[1].each.with_index do |y, inner_index|
+        y.gsub!(/[^a-z]/, '')
+        temp_array[1][inner_index] = [y.length, y.length % 2 == 0]
+      end
+    end
+  end
+  
+
+  
+  
+  filex.close
+  
+  test "should return the total score for discount" do
+    assert_equal [[[11, 4], [9, 3], [9, 4]], [[8, true], [19, false], [12, true]]],
+    discount(temp_array)
+  end
 end
