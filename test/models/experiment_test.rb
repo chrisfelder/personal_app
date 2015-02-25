@@ -163,7 +163,7 @@ class ExperimentTest < ActiveSupport::TestCase
   
   temp_array = []
   passed_array = []
-  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/discount1.txt", "r")
+  filex = File.open(Rails.root.to_s + "/lib/assets/codeeval/discount2.txt", "r")
   filex.each_line do |line|
     temp_array = line.strip.downcase.split(";")
   end
@@ -193,6 +193,14 @@ class ExperimentTest < ActiveSupport::TestCase
   
   test "should return the total score for discount" do
     assert_equal [[[11, 4], [9, 3], [9, 4]], [[8, true], [19, false], [12, true]]],
-    discount(temp_array)
+      discountx(temp_array)
+  end
+  
+  test "integers with common factors should return true" do
+    assert compare_factors?(10, 8)
+  end
+  
+  test "integers with no common factors should return false" do
+    assert_not compare_factors?(19, 91)
   end
 end

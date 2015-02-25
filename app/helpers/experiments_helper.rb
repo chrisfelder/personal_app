@@ -737,7 +737,134 @@ module ExperimentsHelper
     returned_distance
   end
   
+
+  
+  #compares two numbers<n = 1 - 30 based on their prime factors
+  def generate_factors
+    factors = []
+    temp_array = []
+    temp_comp = []
+    (0..100).each do |x|
+      temp_array << x
+    end
+    temp_array.each.with_index do |x, index|
+      temp_comp[index] = []
+      if x == 0 || x == 1
+        temp_comp[index] = [x]
+      else
+        factors << x
+        factors.each do |y|
+          if x % y == 0
+            temp_comp[index] << y
+          end
+        end
+      end
+    end
+    temp_comp
+  end
+  #compares two integers, returns true if they share a factor other than 1
+  def compare_factors?(var1, var2)
+    factors = [[0], [1], [2], [3], [2, 4], [5], [2, 3, 6], [7], [2, 4, 8],
+    [3, 9], [2, 5, 10], [11], [2, 3, 4, 6, 12], [13], [2, 7, 14], [3, 5, 15],
+    [2, 4, 8, 16], [17], [2, 3, 6, 9, 18], [19], [2, 4, 5, 10, 20], [3, 7, 21],
+    [2, 11, 22], [23], [2, 3, 4, 6, 8, 12, 24], [5, 25], [2, 13, 26], [3, 9, 27],
+    [2, 4, 7, 14, 28], [29], [2, 3, 5, 6, 10, 15, 30], [31], [2, 4, 8, 16, 32],
+    [3, 11, 33], [2, 17, 34], [5, 7, 35], [2, 3, 4, 6, 9, 12, 18, 36], [37],
+    [2, 19, 38], [3, 13, 39], [2, 4, 5, 8, 10, 20, 40], [41],
+    [2, 3, 6, 7, 14, 21, 42], [43], [2, 4, 11, 22, 44], [3, 5, 9, 15, 45],
+    [2, 23, 46], [47], [2, 3, 4, 6, 8, 12, 16, 24, 48], [7, 49],
+    [2, 5, 10, 25, 50], [3, 17, 51], [2, 4, 13, 26, 52], [53],
+    [2, 3, 6, 9, 18, 27, 54], [5, 11, 55], [2, 4, 7, 8, 14, 28, 56], [3, 19, 57],
+    [2, 29, 58], [59], [2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60], [61],
+    [2, 31, 62], [3, 7, 9, 21, 63], [2, 4, 8, 16, 32, 64], [5, 13, 65],
+    [2, 3, 6, 11, 22, 33, 66], [67], [2, 4, 17, 34, 68], [3, 23, 69],
+    [2, 5, 7, 10, 14, 35, 70], [71], [2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72],
+    [73], [2, 37, 74], [3, 5, 15, 25, 75], [2, 4, 19, 38, 76], [7, 11, 77],
+    [2, 3, 6, 13, 26, 39, 78], [79], [2, 4, 5, 8, 10, 16, 20, 40, 80],
+    [3, 9, 27, 81], [2, 41, 82], [83], [2, 3, 4, 6, 7, 12, 14, 21, 28, 42, 84],
+    [5, 17, 85], [2, 43, 86], [3, 29, 87], [2, 4, 8, 11, 22, 44, 88], [89],
+    [2, 3, 5, 6, 9, 10, 15, 18, 30, 45, 90], [7, 13, 91], [2, 4, 23, 46, 92],
+    [3, 31, 93], [2, 47, 94], [5, 19, 95], 
+    [2, 3, 4, 6, 8, 12, 16, 24, 32, 48, 96], [97], [2, 7, 14, 49, 98],
+    [3, 9, 11, 33, 99], [2, 4, 5, 10, 20, 25, 50, 100]]
+    
+    temp1 = factors[var1]
+    temp2 = factors[var2]
+    length = temp1 & temp2
+    if length.length > 0
+      true
+    else
+      false
+    end
+  end
+  
+  ##############################################################################
+  # input: array of product and consumer arrays
+  #
+  #   [[consumer arrays] , [product arrays]]
+  # Index        0                  1
+  #
+  # consumer array:
+  #   [name length, # of vowels]
+  # Index   0             1
+  #
+  # product array:
+  #   [product name length, boolean is_even?]
+  # Index          0               1
+  #
+  # output: max sum of all products matched to users with max suitability score
+  #
+  ##############################################################################
   def discount(array)
-    return array
+    max_ss = 0.0
+    #array[0].sort!.reverse!
+    #array[1].shuffle!
+    array[1].each.with_index do |product, index|
+      ss = 0.0
+      temp_index = 0.0
+      temp_ss = 0.0
+      if product[1] == true #if product name is even
+        array[0].each.with_index do |customer, inner_index|
+          temp_ss = customer[1].to_f * 1.5
+          
+          if compare_factors?(product[0], customer[0])
+            temp_ss *= 1.5
+          end
+          
+          if temp_ss > ss
+            ss = temp_ss
+            temp_index = inner_index
+          end
+        end
+      else  #product name is odd
+        array[0].each.with_index do |customer, inner_index|
+          temp_ss = customer[0].to_f - customer[1].to_f
+          if compare_factors?(product[0], customer[0])
+            temp_ss *= 1.5
+          end
+            
+          if temp_ss > ss
+            ss = temp_ss
+            temp_index = inner_index
+          end
+        end
+      end
+      max_ss += ss.to_f
+      array[0][temp_index] = [0, 0]
+    end
+    
+    max_ss.round(2)
+  end
+  
+  def discountx(array)
+    temp_sum = 0
+    return_sum = 0
+      (0..1000).each do |x|
+        temp_sum = discount(array)
+        if temp_sum > return_sum
+          return_sum = temp_sum
+        end
+      end
+    return_sum
   end
 end
