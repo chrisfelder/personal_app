@@ -817,8 +817,6 @@ module ExperimentsHelper
   ##############################################################################
   def discount(array)
     max_ss = 0.0
-    #array[0].sort!.reverse!
-    #array[1].shuffle!
     array[1].each.with_index do |product, index|
       ss = 0.0
       temp_index = 0.0
