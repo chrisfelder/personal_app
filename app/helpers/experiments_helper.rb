@@ -863,6 +863,7 @@ module ExperimentsHelper
           return_sum = temp_sum
         end
       end
-    return_sum
+    #return_sum
+    return discount(array)
   end
 end

@@ -18,8 +18,10 @@ gem 'turbolinks',              '2.3.0'
 gem 'jbuilder',                '2.2.3'
 gem 'rouge',                   '~> 1.7.7'
 gem 'redcarpet',               '~> 3.0.0'
+gem "paperclip",               '~> 4.2'
 gem 'sdoc',                    '0.4.0', group: :doc
 gem 'safe_attributes'
+gem 'aws-sdk'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

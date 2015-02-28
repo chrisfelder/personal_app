@@ -191,10 +191,10 @@ class ExperimentTest < ActiveSupport::TestCase
   
   filex.close
   
-  test "should return the total score for discount" do
-    assert_equal [[[11, 4], [9, 3], [9, 4]], [[8, true], [19, false], [12, true]]],
-      discountx(temp_array)
-  end
+  #test "should return the total score for discount" do
+  #  assert_equal [[[11, 4], [9, 3], [9, 4]], [[8, true], [19, false], [12, true]]],
+  #    discountx(temp_array)
+  #end
   
   test "integers with common factors should return true" do
     assert compare_factors?(10, 8)
