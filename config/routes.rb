@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
 
+  get 'tracks/index'
+
+  get 'tracks/show'
+
+  get 'tracks/new'
+
+  get 'tracks/edit'
+
   get 'eyetracking' => 'projects#eyetracking'
   
   get 'interview' => 'experiments#interview'
@@ -13,6 +21,7 @@ Rails.application.routes.draw do
   
   resources :experiments
   resources :challenges
+  resources :tracks
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'

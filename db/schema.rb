@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150131195916) do
+ActiveRecord::Schema.define(version: 20150302003303) do
 
-  create_table "challenges", force: true do |t|
+  create_table "challenges", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.text     "code"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150131195916) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "characters", force: true do |t|
+  create_table "characters", force: :cascade do |t|
     t.string   "name"
     t.integer  "strength"
     t.integer  "defense"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20150131195916) do
 
   add_index "characters", ["user_id"], name: "index_characters_on_user_id"
 
-  create_table "experiments", force: true do |t|
+  create_table "experiments", force: :cascade do |t|
     t.string   "save_state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20150131195916) do
 
   add_index "experiments", ["save_state"], name: "index_experiments_on_save_state"
 
-  create_table "gamestores", force: true do |t|
+  create_table "gamestores", force: :cascade do |t|
     t.string   "name"
     t.integer  "turn"
     t.integer  "char1"
@@ -59,7 +59,17 @@ ActiveRecord::Schema.define(version: 20150131195916) do
   add_index "gamestores", ["user_id", "created_at"], name: "index_gamestores_on_user_id_and_created_at"
   add_index "gamestores", ["user_id"], name: "index_gamestores_on_user_id"
 
-  create_table "users", force: true do |t|
+  create_table "tracks", force: :cascade do |t|
+    t.string   "name"
+    t.text     "input"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "trial_time"
+    t.integer  "calibration_time"
+    t.integer  "recalibration_time"
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"

@@ -36,9 +36,6 @@ files.each do |file|
   contents = File.open(file).read
   #Each section in the file is split with a <>
   array = contents.split("<>")
-  challenge = Challenge.create(
-    title: array[0],
-    description: array[1],
-    code: array[2]
-    )
-  end
+  challenge = Challenge.create(title: array[0].chomp, description: array[1], code: array[2])
+
+end
