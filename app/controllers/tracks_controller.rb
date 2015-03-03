@@ -1,4 +1,5 @@
 class TracksController < ApplicationController
+  include TracksHelper
   before_action :process_file, only: :create
   def index
   end
@@ -6,6 +7,9 @@ class TracksController < ApplicationController
   def show
     @track = Track.find(params[:id])
     @string_array = @track.input.split("\n")
+    table_data = look_first(screen_data(@track.input), @track.number_of_trials, @track.trial_time,
+                @track.calibration_time, @track.recalibration_time)
+    @processed_table = process_table(table_data)
   end
 
   def new
@@ -24,7 +28,8 @@ class TracksController < ApplicationController
     
     def track_params
       params.require(:track).permit(:name, :input, :trial_time,
-                                     :calibration_time, :recalibration_time)
+                                     :calibration_time, :recalibration_time,
+                                     :number_of_trials)
     end
     
     # Convert the file to a string before saving
@@ -39,4 +44,5 @@ class TracksController < ApplicationController
       
       params[:track][:input] = temp_string
     end
+    
 end

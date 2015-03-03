@@ -1,7 +1,50 @@
+
+
+
+
+
 <h1><%= @track.name %></h1>
-<% @string_array.each do |line| %>
-<div class="row" >
-    <p><%= line %></p>
-</div>
-<% end %>
-<p><%= look_first %></p>
+
+
+<table class="table table-striped" >
+    <thead>
+        <th>Trial # </th>
+        <th>Looked First</th>
+        <th>Looked Left</th>
+        <th>Looked Right</th>
+    </thead>
+    
+    <tbody>
+    <% @processed_table.each do |x| %>
+      <tr>
+      <% x.each do |y| %>
+        <td> <%= y %></td>
+      <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+    
+</table>
+
+   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Raw Output
+              </a>
+            </h4>
+           </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+              <% @string_array.each do |line| %>
+                <div class="row" >
+                    <p><%= line %></p>
+                </div>
+                <% end %>
+          </div>
+        </div>
+      </div>
+      
+
+   </div> 
