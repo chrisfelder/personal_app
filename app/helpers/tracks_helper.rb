@@ -36,6 +36,8 @@ module TracksHelper
 #    return [init_position.round(2), left_array, right_array]
 #  end
   
+  
+  
   def look_first(array, num_of_trials, trial_time, calibration, recalibration)
     #convert seconds to indices
     recalibration *= 60   
@@ -46,11 +48,11 @@ module TracksHelper
     trial_state = false
     trial_count = 0
     next_transition = 0
-    midpoint = 0
     
     #variables used to calculate the initial average midpoint
     init_midpoint_sum = 0
     init_midpoint_count = 0
+    midpoint = 0
     
     #variables used for calculating stdev
     stdev_array = []
@@ -59,9 +61,10 @@ module TracksHelper
     left_count = 0
     right_count = 0
     
-    # true = left, false = right
+    #variables for storing final output
     looked_first_array = []
     time_looked_array = []
+    
     
     array.each.with_index do |position, index|
       #prevents blinking from disrupting results
@@ -78,6 +81,7 @@ module TracksHelper
         midpoint = init_midpoint_sum / init_midpoint_count
         next_transition = calibration
         
+        #initialize the stdev array
         (0..20).each do |x|
           stdev_array << array[index - x]
         end
