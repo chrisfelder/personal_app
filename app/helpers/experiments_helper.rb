@@ -866,4 +866,38 @@ module ExperimentsHelper
     #return_sum
     return discount(array)
   end
+  
+  # Compute modulo of two string of two numbers "N, M"
+  def modulo(string)
+    #temp_array[0] = p     temp_array[1] = q
+    temp_array = string.split(",")
+    product_array = []
+    temp_string = ""
+    
+    # Produce the array of c*q
+    (1..10).each do |x|
+      product_array << x * temp_array[1].to_i
+    end
+    
+    temp_array[0].each_char do |char|
+      temp_string << char
+      if temp_string.to_i < temp_array[1].to_i
+        next
+      else
+        product_array.each.with_index do |product, inner_index|
+          if product < temp_string.to_i
+            next
+          elsif product == temp_string.to_i
+            temp_string = ""
+            break
+          else
+            temp_string = (temp_string.to_i - product_array[inner_index - 1]).to_s
+            break
+          end
+        end
+      end
+    end
+    return temp_string.to_i
+  end
+  
 end

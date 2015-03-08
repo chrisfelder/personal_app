@@ -203,4 +203,12 @@ class ExperimentTest < ActiveSupport::TestCase
   test "integers with no common factors should return false" do
     assert_not compare_factors?(19, 91)
   end
+  
+  test "modulo should return the modulo" do
+    assert_equal 2, modulo("20,6")
+  end
+  
+  test "modulo should return the moduloII" do
+    assert_equal 2, modulo("2,3")
+  end
 end
