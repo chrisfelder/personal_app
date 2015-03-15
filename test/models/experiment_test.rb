@@ -196,19 +196,32 @@ class ExperimentTest < ActiveSupport::TestCase
   #    discountx(temp_array)
   #end
   
-  test "integers with common factors should return true" do
-    assert compare_factors?(10, 8)
-  end
+#  test "integers with common factors should return true" do
+#    assert compare_factors?(10, 8)
+#  end
+#  
+#  test "integers with no common factors should return false" do
+#    assert_not compare_factors?(19, 91)
+#  end
+#  
+#  test "modulo should return the modulo" do
+#    assert_equal 2, modulo("20,6")
+#  end
+#  
+#  test "modulo should return the moduloII" do
+#    assert_equal 2, modulo("2,3")
+#  end
+#  
+#  test "sum_ints should return true O " do
+#    assert_equal 30, sum_ints(59, 79)
+#  end
+#  
+#  test "sum_ints should return true II" do
+#    assert_equal 12, sum_ints(5, 7)
+#  end
+#  
+  #test "grid_walk should return true" do
+  #  assert_equal 4030, grid_walk()
+  #end
   
-  test "integers with no common factors should return false" do
-    assert_not compare_factors?(19, 91)
-  end
-  
-  test "modulo should return the modulo" do
-    assert_equal 2, modulo("20,6")
-  end
-  
-  test "modulo should return the moduloII" do
-    assert_equal 2, modulo("2,3")
-  end
 end

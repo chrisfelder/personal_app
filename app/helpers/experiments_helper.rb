@@ -900,4 +900,115 @@ module ExperimentsHelper
     return temp_string.to_i
   end
   
+  # Creates a 2D array
+  # Marks cells with sums < 20 as unvisited
+  def init_graph()
+    map = []
+    temp_map = []
+
+    
+    (0..999).each do |x|
+      temp_map = []
+      (0..999).each do |y|
+        if sum_ints(x, y) < 20
+          temp_map << false
+        else
+          temp_map << true
+        end
+      end
+      map[x] = temp_map
+      
+    end
+    return map
+  end
+  
+  def grid_walkx(graph, coordinate)
+    x = coordinate[0]
+    y = coordinate[1]
+    graph[x][y] = true
+    right = [graph, 0]
+    up = [graph, 0]
+    left = [graph, 0]
+    down = [graph, 0]
+    
+    if graph[x + 1][y] == true && graph[x][y + 1] == true &&
+       graph[x][y - 1] == true && graph[x - 1][y] == true
+       return [graph, 1]
+    else
+      if graph[x + 1][y] == false
+        right = grid_walkx(graph, [x + 1, y])
+        graph = right[0]
+      end
+      
+      if graph[x][y + 1] == false
+        up = grid_walkx(graph, [x, y + 1])
+        graph = up[0]
+      end
+      
+      if graph[x][y - 1] == false
+        down = grid_walkx(graph, [x, y - 1])
+        graph = down[0]
+      end
+      
+      if graph[x - 1][y] == false
+        left = grid_walkx(graph, [x - 1, y])
+        graph = left[0]
+      end
+    end
+    sum = right[1] + left[1] + up[1] + down[1]
+    return [graph, sum]
+  end
+  
+  def grid_walk()
+    graph = init_graph()
+    temp_save = [[0,0]]
+    count = 0
+    x = 0
+    y = 0
+    until temp_save == []
+      coordinates = temp_save.pop
+      x = coordinates[0]
+      y = coordinates[1]
+      graph[x][y] = true
+      count += 1
+      
+      if graph[x - 1][y] == false
+        temp_save << [x - 1, y]
+        graph[x - 1][y] = true
+      end
+      
+      if graph[x][y - 1] == false
+        temp_save << [x, y - 1]
+        graph[x][y - 1] = true
+      end
+      
+      if graph[x][y + 1] == false
+        temp_save << [x , y + 1]
+        graph[x][y + 1] = true
+      end
+      
+      if graph[x + 1][y] == false
+        temp_save << [x + 1, y]
+        graph[x + 1][y] = true
+      end
+      
+    end
+    return count
+  end
+  
+  def sum_ints(intx, inty)
+    temp_sumx = 0
+    temp_sumy = 0
+    while intx > 0
+      temp_sumx += intx.abs % 10
+      intx /= 10
+    end
+    
+    while inty > 0
+      temp_sumy += inty.abs % 10
+      inty /= 10
+    end
+    
+    return temp_sumx + temp_sumy
+  end
 end
