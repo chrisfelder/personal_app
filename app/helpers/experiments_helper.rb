@@ -1014,7 +1014,7 @@ module ExperimentsHelper
   
   def string_list(input_string)
     temp_array = input_string.split(",")
-    string_length = temp_array[0]
+    string_length = temp_array[0].to_i
     characters = temp_array[1].chomp
     characters.each_char.with_index do |x, index|
         for y in ((index + 1)..characters.length - 1)
@@ -1024,6 +1024,28 @@ module ExperimentsHelper
         end
     end
     characters.chomp!
-    characters
+    temp_array = []
+    characters.each_char do |y|
+      temp_array << y
+    end
+    
+    return perms(string_length, temp_array).join(",")
+  end
+  
+  def perms(max_length, character_array)
+    all = [""]
+    current_array = all.clone
+    1.upto(max_length) do |iteration|
+      next_array = []
+      current_array.each do|string|
+        character_array.each do |c|
+          value = string + c
+          next_array.insert next_array.length, value
+          all.insert all.length, value
+        end
+      end
+      current_array = next_array
+    end
+    all.delete_if { |string| string.length < max_length }
   end
 end
