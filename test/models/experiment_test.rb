@@ -224,4 +224,8 @@ class ExperimentTest < ActiveSupport::TestCase
   #  assert_equal 4030, grid_walk()
   #end
   
+  test "string_list shoudl return array" do
+    assert_equal ["aa,ab,ba,bb"], string_list("2,ab")
+  end
+  
 end

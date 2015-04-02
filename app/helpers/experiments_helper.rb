@@ -1011,4 +1011,19 @@ module ExperimentsHelper
     
     return temp_sumx + temp_sumy
   end
+  
+  def string_list(input_string)
+    temp_array = input_string.split(",")
+    string_length = temp_array[0]
+    characters = temp_array[1].chomp
+    characters.each_char.with_index do |x, index|
+        for y in ((index + 1)..characters.length - 1)
+            if characters[index] == characters[y]
+               characters[y] = " " 
+            end
+        end
+    end
+    characters.chomp!
+    characters
+  end
 end
