@@ -1048,4 +1048,32 @@ module ExperimentsHelper
     end
     all.delete_if { |string| string.length < max_length }
   end
+  
+  def difference(input_array)
+    jobs = input_array.shift
+    temp_array = []
+    #input_array.sort! { |a,b| a[0] - a[1] <=> b[0] - b[1]}
+    input_array.sort_by! { |i| [i[0] - i[1], i[0]]}.reverse!
+    sum = 0
+    completion_time = 0
+    input_array.each.with_index do |pair, index|
+      completion_time += pair[1]
+      sum = sum + pair[0] * completion_time
+    end
+    return sum
+  end
+  
+    def ratio(input_array)
+    jobs = input_array.shift
+    temp_array = []
+    #input_array.sort! { |a,b| a[0] - a[1] <=> b[0] - b[1]}
+    input_array.sort_by! { |i| [(i[0].to_f / i[1].to_f), i[0]]}.reverse!
+    sum = 0
+    completion_time = 0
+    input_array.each.with_index do |pair, index|
+      completion_time += pair[1]
+      sum = sum + pair[0] * completion_time
+    end
+    return sum
+  end
 end
