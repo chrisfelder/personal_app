@@ -230,26 +230,30 @@ class ExperimentTest < ActiveSupport::TestCase
   
   temp_array = []
   passed_array = []
+  int_array = []
+  node_count = 0
   filex = File.open(Rails.root.to_s +
-          "/lib/assets/algorithms2/assignment1/jobs_full.txt", "r")
+          "/lib/assets/algorithms2/assignment2/clustering1.txt", "r")
 
           
   filex.each_line do |line|
+    if node_count == 0
+      node_count = line.to_i
+      next
+    end
+    
     temp_line = line.split(" ")
     temp_line.each.with_index do |x, index|
       temp_line[index] = x.to_i
     end
-    temp_array << temp_line
+    passed_array << temp_line
   end
   filex.close
-  array = temp_array.clone
-  #test "difference should return sum" do
-  #  assert_equal 31814, difference(array)
+
+  #test "cluster_max returns 6 for 2 clusters" do
+  #  assert_equal 6, cluster_max(clusters, 4, passed_array)
   #end
-#  
-#  test "ratio should return sum" do
-#    assert_equal 31814, ratio(temp_array)
-#  end
-  
-  
+
+
+
 end

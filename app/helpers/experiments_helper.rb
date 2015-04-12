@@ -1076,4 +1076,159 @@ module ExperimentsHelper
     end
     return sum
   end
+  
+  #PROBLEM
+#--------
+#You have a string of words and digits divided by comma. 
+#Write a program which separates words with digits. 
+#You shouldn't change the order elements. 
+
+  def separate_words(line) 
+  	
+  	$numbers = []
+  	$myString = ""
+  	$FIRST = true
+	
+  	#get the words
+  	line.split(",").each do |i|
+  		if (i =~ /[A-Za-z]/)
+  			if ($FIRST)
+  				$FIRST = false
+  				$myString += "#{i}"
+  			else 
+  				$myString += ",#{i}"
+  			end
+  		else
+  			$numbers.push(i)
+  		end
+  	end
+  	
+  	if ($myString.to_s.strip.length == 0)
+  		puts line	# Just numbers so print line
+  	else 
+  		$FIRST = true
+  		$numbers.each do |i|
+  			if (i == $numbers.first)
+  				$myString += "|#{i}"				
+  			elsif (i == $numbers.last)
+  				$myString += ",#{i}"
+  				puts $myString	
+  			else 
+  				$myString += ",#{i}"
+  			end
+  		end 
+  	end
+  end
+  
+  
+  #accepts a string "main_string,sub_string"
+  #returns true if the main_string contains the sub_string
+  #returns false otherwise
+  def string_search(input_string)
+    temp_array = input_string.chomp.split(",")
+    sub_string = temp_array[1]
+    main_string = temp_array[0]
+    sub_count = 0
+    main_count = 0
+    check_string = ""
+    seq_check = false
+    escaped = false
+ 
+    while main_count <= main_string.length - 1
+    
+      if sub_string[sub_count] == '\\'
+        if sub_string[sub_count + 1] == '*'
+          escaped = true
+          sub_count += 1
+          next
+        end
+      end
+        
+    
+      if sub_string[sub_count] == "*"
+        if escaped == true && main_string[main_count] == sub_string[sub_count]
+          check_string += "\\*"
+          sub_count += 1
+        elsif escaped == false
+          seq_check = false
+          check_string += "*"
+          sub_count += 1
+        end
+        
+      elsif main_string[main_count] != sub_string[sub_count] && seq_check == true
+        sub_count = 0
+        check_string = ""
+        seq_check = false
+        
+      elsif main_string[main_count] == sub_string[sub_count] || seq_check == true
+        
+        if sub_count == 0
+          if sub_string.length == 1
+            return true
+          end
+          seq_check = true
+        elsif sub_count == sub_string.length - 1
+          seq_check = false
+        end
+        
+        check_string += main_string[main_count]
+        sub_count += 1
+
+
+      end
+      main_count += 1
+    end
+    if check_string == sub_string
+      return true
+    else
+      false
+    end
+    
+  end
+
+  def cluster_max(current_clusters, min_clusters, graph)
+    min_array = []
+    while current_clusters > min_clusters
+      current_clusters -= 1
+      min_array = min_distance(graph)
+      graph = merge_clusters(min_array[0], min_array[1], graph)
+    end
+    return min_distance(graph)[2]
+  end
+  
+  def min_distance(graph)
+    min_dist = Float::INFINITY
+    saved_index = 0
+    graph.each.with_index do |x, index|
+      if x[2] < min_dist
+        saved_index = index
+        min_dist = x[2]
+      end
+    end
+    return graph.delete_at(saved_index) #removes the index to be merged
+  end
+  
+  def max_distance(graph)
+    max_dist = 0
+    saved_array = []
+    graph.each.with_index do |x, index|
+      if x[2] > max_dist
+        saved_array = x
+        max_dist = x[2]
+      end
+    end
+    return max_dist
+  end
+  
+  def merge_clusters(initial_cluster, to_merge_cluster, graph)
+    graph.each.with_index do |x, index|
+      if x[0] == to_merge_cluster
+        graph[index][0] = initial_cluster
+      elsif x[1] == to_merge_cluster
+        graph[index][1] = initial_cluster
+      end
+    end
+    return graph.delete_if { |x| x[0] == x[1] }
+  end
+
 end
